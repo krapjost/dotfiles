@@ -1,0 +1,35 @@
+* {
+	font-size: 13px;
+	font-family: pira-code;
+}
+
+window#waybar {
+	background: #000000;
+	color: #cccccc;
+}
+
+#workspaces button {
+	padding: 0 2px;
+	color: #7d7d7d;
+}
+#workspaces button.focused {
+	color: #ffffff;
+}
+#workspaces button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+#workspaces button:hover {
+	background: #1a1a1a;
+	border: #1a1a1a;
+	padding: 0 3px;
+}
+
+#clock,
+#pulseaudio,
+#memory,
+#cpu,
+#battery,
+#disk {
+	padding: 0 10px;
+}
