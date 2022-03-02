@@ -1,5 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
@@ -7,12 +5,6 @@ ZSH_THEME="bureau"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
 
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Which plugins would you like to load?
@@ -20,34 +12,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+# 
 plugins=(git)
-
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -57,9 +23,11 @@ fi
 #alias
 alias ~~="cd ~/jost/"
 alias vi="nvim"
-alias job="cd ~/jost/job"
+alias work="cd ~/jost/work"
 alias ref="cd ~/jost/ref"
 alias tut="cd ~/jost/tutorials"
+alias conf="cd ~/dotfiles && vi .zshrc"
+alias rye="cd ~/jost/ref/rye/frontend && vi lib/main.dart"
 
 export PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin
 export CHROME_EXECUTABLE=/usr/bin/chromium
@@ -84,5 +52,4 @@ else
     fi
 fi
 unset __conda_setup
-
 # <<< conda initialize <<<
