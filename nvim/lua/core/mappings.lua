@@ -182,8 +182,6 @@ M.telescope = function()
    map("n", m.themes, ":Telescope themes <CR>")
 end
 
-
-
 map("n", "<leader>cc", ":Telescope <CR>")
 map("n", "<leader>q", ":q <CR>")
 
@@ -213,5 +211,7 @@ map("v", " a", "<esc><cmd>lua require('lsp-fastaction').range_code_action()<CR>"
 
 --formatting_seq_sync
 map("n", " fm", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>")
+
+map("n", "\\", "<cmd>lua vim.diagnostic.open_float()<CR>")
 
 return M

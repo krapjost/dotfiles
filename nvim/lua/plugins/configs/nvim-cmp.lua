@@ -1,42 +1,17 @@
+vim.opt.completeopt = "menuone,noselect"
 return function()
-   local icons = {
-      Text = "",
-      Method = "",
-      Function = "",
-      Constructor = "",
-      Field = "ﰠ",
-      Variable = "",
-      Class = "ﴯ",
-      Interface = "",
-      Module = "",
-      Property = "ﰠ",
-      Unit = "塞",
-      Value = "",
-      Enum = "",
-      Keyword = "",
-      Snippet = "",
-      Color = "",
-      File = "",
-      Reference = "",
-      Folder = "",
-      EnumMember = "",
-      Constant = "",
-      Struct = "פּ",
-      Event = "",
-      Operator = "",
-      TypeParameter = "",
-   }
    local cmp = require "cmp"
    local ls = require "luasnip"
    cmp.setup {
       sources = {
-         { name = "luasnip" },
-         { name = "nvim_lsp" },
+         { name = "nvim_lsp", max_item_count = 10 },
+         { name = "luasnip", max_item_count = 5 },
          { name = "nvim_lua" },
          { name = "buffer", keyword_length = 5 },
          { name = "cmdline" },
          { name = "path" },
       },
+
       experimental = { ghost_text = true },
       snippet = {
          expand = function(args)
@@ -44,22 +19,33 @@ return function()
          end,
       },
       formatting = {
-         format = function(_, item)
-            item.kind = icons[item.kind]
+         format = function(entry, item)
+            local icons = require "plugins.configs.lspkind_icons"
+            item.kind = string.format("%s %s", icons[item.kind], item.kind)
+            item.menu = ({
+               nvim_lsp = "[LSP]",
+               nvim_lua = "[Lua]",
+               buffer = "[BUF]",
+            })[entry.source.name]
             return item
          end,
          fields = { "kind", "abbr", "menu" },
       },
+
       mapping = {
+         ["<C-j>"] = cmp.mapping.select_next_item(),
+         ["<C-k>"] = cmp.mapping.select_prev_item(),
          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
          ["<C-f>"] = cmp.mapping.scroll_docs(4),
          ["<C-e>"] = cmp.mapping.abort(),
-         ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+         ["<C-Space>"] = cmp.mapping.complete(),
+         ["<CR>"] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+         },
          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-               cmp.select_next_item()
-            elseif ls.expand_or_jumpable() then
-               vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            if ls.expand_or_jumpable() then
+               ls.expand_or_jump()
             else
                fallback()
             end
@@ -68,7 +54,7 @@ return function()
             if cmp.visible() then
                cmp.select_prev_item()
             elseif ls.jumpable(-1) then
-               vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+               ls.jump(-1)
             else
                fallback()
             end
