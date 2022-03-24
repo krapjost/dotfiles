@@ -23,16 +23,23 @@ fi
 #alias
 alias ~~="cd ~/jost/"
 alias vi="nvim"
-alias work="cd ~/jost/work"
+alias work="cd ~/projects"
+alias log="cd ~/jost/log"
 alias ref="cd ~/jost/ref"
 alias tut="cd ~/jost/tutorials"
 alias conf="cd ~/dotfiles && vi .zshrc"
-alias rye="cd ~/jost/ref/rye/frontend && vi lib/main.dart"
+alias ryev="cd ~/jost/ref/flutter/rye/frontend && vi lib/main.dart"
+alias rye="cd ~/jost/ref/flutter/rye/frontend"
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools
+
+export ANDROID_NDK_HOME=~/Android/Sdk/ndk
+export NDK_HOME=~/Android/Sdk/ndk
+export ANDROID_SDK_ROOT=~/Android/Sdk
 export CHROME_EXECUTABLE=/usr/bin/chromium
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GO111MODULE='on'
+export GITHUB_PAGE_DIR=~/jost/log/krapjost.github.io
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/nvm/init-nvm.sh
