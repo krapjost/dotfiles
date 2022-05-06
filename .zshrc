@@ -31,7 +31,7 @@ alias conf="cd ~/dotfiles && vi .zshrc"
 alias ryev="cd ~/jost/ref/flutter/rye/frontend && vi lib/main.dart"
 alias rye="cd ~/jost/ref/flutter/rye/frontend"
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools
+export PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools:$HOME/jost/src/flutter/bin:/usr/lib/jvm/java-17-openjdk/bin  
 
 export ANDROID_NDK_HOME=~/Android/Sdk/ndk
 export NDK_HOME=~/Android/Sdk/ndk
@@ -44,19 +44,3 @@ export GITHUB_PAGE_DIR=~/jost/log/krapjost.github.io
 source $ZSH/oh-my-zsh.sh
 source /usr/share/nvm/init-nvm.sh
 eval "$(ipfs commands completion bash)"
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/krap/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/krap/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/krap/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/krap/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
