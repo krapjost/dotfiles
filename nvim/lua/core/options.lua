@@ -46,6 +46,9 @@ opt.updatetime = options.updatetime
 opt.whichwrap:append "<>[]hl"
 
 g.mapleader = options.mapleader
+g.code_action_menu_show_details = true
+g.code_action_menu_show_diff = false
+g.code_action_menu_window_border = "single"
 
 -- disable some builtin vim plugins
 local disabled_built_ins = {

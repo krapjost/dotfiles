@@ -5,8 +5,6 @@ local map_wrapper = utils.map
 
 local maps = config.mappings
 local plugin_maps = maps.plugins
-local nvChad_options = config.options.nvChad
-
 local cmd = vim.cmd
 
 -- This is a wrapper function made to disable a plugin mapping from chadrc
@@ -47,41 +45,26 @@ M.misc = function()
    end
 
    local function optional_mappings()
-      -- don't yank text on cut ( x )
-      if not nvChad_options.copy_cut then
-         map_wrapper({ "n", "v" }, "x", '"_x')
-      end
-
-      -- don't yank text on delete ( dd )
-      if not nvChad_options.copy_del then
-         map_wrapper({ "n", "v" }, "d", '"_d')
-      end
-
       -- navigation within insert mode
-      if nvChad_options.insert_nav then
-         local inav = maps.insert_nav
+      local inav = maps.insert_nav
 
-         map("i", inav.backward, "<Left>")
-         map("i", inav.end_of_line, "<End>")
-         map("i", inav.forward, "<Right>")
-         map("i", inav.next_line, "<Up>")
-         map("i", inav.prev_line, "<Down>")
-         map("i", inav.beginning_of_line, "<ESC>^i")
-      end
+      map("i", inav.backward, "<Left>")
+      map("i", inav.end_of_line, "<End>")
+      map("i", inav.forward, "<Right>")
+      map("i", inav.next_line, "<Up>")
+      map("i", inav.prev_line, "<Down>")
+      map("i", inav.beginning_of_line, "<ESC>^i")
 
       -- easier navigation between windows
-      if nvChad_options.window_nav then
-         local wnav = maps.window_nav
+      local wnav = maps.window_nav
 
-         map("n", wnav.moveLeft, "<C-w>h")
-         map("n", wnav.moveRight, "<C-w>l")
-         map("n", wnav.moveUp, "<C-w>k")
-         map("n", wnav.moveDown, "<C-w>j")
-      end
+      map("n", wnav.moveLeft, "<C-w>h")
+      map("n", wnav.moveRight, "<C-w>l")
+      map("n", wnav.moveUp, "<C-w>k")
+      map("n", wnav.moveDown, "<C-w>j")
    end
 
    local function required_mappings()
-      map("n", maps.misc.cheatsheet, ":lua require('nvchad.cheatsheet').show() <CR>") -- show keybinds
       map("n", maps.misc.close_buffer, ":lua require('core.utils').close_buffer() <CR>") -- close  buffer
       map("n", maps.misc.copy_whole_file, ":%y+ <CR>") -- copy whole file content
       map("v", maps.misc.copy_to_system_clipboard, '"+y')
@@ -189,11 +172,11 @@ map("n", "<leader>q", ":q <CR>")
 map("n", "<leader>z", ":TZAtaraxis <CR>")
 
 -- flutter tools
-map("n", "<C-b>", ":FlutterOutlineToggle <CR>")
-map("n", "`r", ":FlutterReload <CR>")
-map("n", "`g", ":FlutterPubGet <CR>")
-map("n", "`d", ":FlutterDevices <CR>")
-map("n", "`q", ":FlutterQuit <CR>")
+map("n", "fo", ":FlutterOutlineToggle <CR>")
+map("n", "fr", ":FlutterReload <CR>")
+map("n", "fg", ":FlutterPubGet <CR>")
+map("n", "fd", ":FlutterDevices <CR>")
+map("n", "fq", ":FlutterQuit <CR>")
 
 -- telescope flutter
 map("n", "FF", ":Telescope flutter commands <CR>")
@@ -205,9 +188,10 @@ map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", {})
 map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", {})
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {})
 map("n", " ra", "<cmd>lua vim.lsp.buf.rename()<CR>", {})
--- fastaction
-map("n", " a", '<cmd>lua require("lsp-fastaction").code_action()<CR>', {})
-map("v", " a", "<esc><cmd>lua require('lsp-fastaction').range_code_action()<CR>", {})
+--
+-- code action
+map("n", " a", "<cmd>CodeActionMenu<CR>", {})
+map("v", " a", "<esc><cmd>CodeActionMenu<CR>", {})
 
 --formatting_seq_sync
 map("n", " fm", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>")

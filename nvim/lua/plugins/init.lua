@@ -8,61 +8,28 @@ end
 local override_req = require("core.utils").override_req
 
 local plugins = {
-   { "NvChad/extensions" },
    { "nvim-lua/plenary.nvim" },
    { "lewis6991/impatient.nvim" },
    { "nathom/filetype.nvim" },
-
    {
       "wbthomason/packer.nvim",
       event = "VimEnter",
    },
-
-   {
-      "NvChad/nvim-base16.lua",
-      after = "packer.nvim",
-      config = function()
-         require("colors").init()
-      end,
-   },
-
-   {
-      "kyazdani42/nvim-web-devicons",
-      after = "nvim-base16.lua",
-      config = override_req("nvim_web_devicons", "plugins.configs.icons", "setup"),
-   },
-
-   {
-      "feline-nvim/feline.nvim",
-      disable = not plugin_settings.status.feline,
-      after = "nvim-web-devicons",
-      config = override_req("feline", "plugins.configs.statusline", "setup"),
-   },
-
-   {
-      "akinsho/bufferline.nvim",
-      disable = not plugin_settings.status.bufferline,
-      after = "nvim-web-devicons",
-      config = override_req("bufferline", "plugins.configs.bufferline", "setup"),
-      setup = function()
-         require("core.mappings").bufferline()
-      end,
-   },
-
+   { "rktjmp/lush.nvim" },
+   -- { "metalelf0/jellybeans-nvim" },
+   { "adisen99/apprentice.nvim" },
    {
       "lukas-reineke/indent-blankline.nvim",
       disable = not plugin_settings.status.blankline,
       event = "BufRead",
       config = override_req("indent_blankline", "plugins.configs.others", "blankline"),
    },
-
    {
       "NvChad/nvim-colorizer.lua",
       disable = not plugin_settings.status.colorizer,
       event = "BufRead",
       config = override_req("nvim_colorizer", "plugins.configs.others", "colorizer"),
    },
-
    {
       "nvim-treesitter/nvim-treesitter",
       event = "BufRead",
@@ -84,7 +51,7 @@ local plugins = {
    -- lsp stuff
 
    { "williamboman/nvim-lsp-installer" },
-
+   { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
    {
       "neovim/nvim-lspconfig",
       module = "lspconfig",
@@ -99,19 +66,11 @@ local plugins = {
       config = override_req("lspconfig", "plugins.configs.lspconfig"),
    },
    {
-      "jose-elias-alvarez/null-ls.nvim",
-      after = "nvim-lspconfig",
-      config = function()
-         require("plugins.configs.null-ls-setup").setup()
-      end,
-   },
-   {
       "ray-x/lsp_signature.nvim",
       disable = not plugin_settings.status.lspsignature,
       after = "nvim-lspconfig",
       config = override_req("signature", "plugins.configs.others", "signature"),
    },
-
    {
       "andymass/vim-matchup",
       disable = not plugin_settings.status.vim_matchup,
@@ -120,7 +79,6 @@ local plugins = {
          require("core.utils").packer_lazy_load "vim-matchup"
       end,
    },
-
    {
       "max397574/better-escape.nvim",
       disable = not plugin_settings.status.better_escape,
@@ -133,15 +91,8 @@ local plugins = {
       "rafamadriz/friendly-snippets",
    },
    {
-      "windwp/lsp-fastaction.nvim",
-      config = function()
-         require "plugins.configs.lsp-fastaction"
-      end,
-   },
-   {
       "hrsh7th/nvim-cmp",
       disable = not plugin_settings.status.cmp,
-      after = "friendly-snippets",
       config = require "plugins.configs.nvim-cmp",
    },
    {
@@ -187,13 +138,6 @@ local plugins = {
       after = plugin_settings.options.autopairs.loadAfter,
       config = override_req("nvim_autopairs", "plugins.configs.others", "autopairs"),
    },
-
-   {
-      disable = not plugin_settings.status.alpha,
-      "goolord/alpha-nvim",
-      config = override_req("alpha", "plugins.configs.alpha"),
-   },
-
    {
       "numToStr/Comment.nvim",
       disable = not plugin_settings.status.comment,
@@ -240,7 +184,7 @@ local plugins = {
       "akinsho/flutter-tools.nvim",
       requires = "nvim-lua/plenary.nvim",
       ft = { "dart" },
-      config = require "plugins.configs.flutter-tools",
+      config = require("flutter-tools").setup {},
    },
 }
 

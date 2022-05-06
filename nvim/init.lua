@@ -17,15 +17,42 @@ for _, module in ipairs(core_modules) do
    end
 end
 
--- non plugin mappings
 require("core.mappings").misc()
 
--- check if custom init.lua file exists
-if vim.fn.filereadable(vim.fn.stdpath "config" .. "/lua/custom/init.lua") == 1 then
-   -- try to call custom init, if not successful, show error
-   local ok, err = pcall(require, "custom")
-   if not ok then
-      vim.notify("Error loading custom/init.lua\n\n" .. err)
-   end
-   return
-end
+vim.o.background = "dark" -- or "light" for light mode
+vim.g.apprentice_contrast_dark = "hard"
+vim.g.apprentice_hls_lspreference = "bright_yellow"
+vim.g.apprentice_hls_cursor = "bright_yellow"
+vim.g.apprentice_hls_highlight = "bright_yellow"
+vim.g.apprentice_italicize_booleans = true
+vim.g.apprentice_tabline_sel = "fg0"
+
+require "lush"(require("apprentice").setup {
+   plugins = {
+      -- "buftabline",
+      "cmp", -- nvim-cmp
+      -- "gitgutter",
+      -- "gitsigns",
+      "lsp",
+      "nvimtree",
+      -- "neogit",
+      "packer",
+      "telescope",
+      "treesitter",
+   },
+   langs = {
+      "c",
+      "lua",
+      "elixir",
+      "golang",
+      "rust",
+      "html",
+      "css",
+      "js",
+      "jsx",
+      "typescript",
+      "json",
+      "xml",
+      "markdown",
+   },
+})

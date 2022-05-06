@@ -14,12 +14,24 @@ M.setup_lsp = function(attach, capabilities)
    }
 
    lsp_installer.on_server_ready(function(server)
-      local on_attach = function(client, bufnr)
-         vim.api.nvim_command [[autocmd BufWritePre * lua vim.lsp.buf.formatting_seq_sync()]]
-      end
-
       local opts = {
-         on_attach = on_attach(),
+         on_attach = function(client, bufnr)
+            if client.resolved_capabilities.document_formatting then
+               vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync() ]]
+            end
+
+            if client.resolved_capabilities.document_highlight then
+               vim.cmd [[ autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight() ]]
+
+               vim.cmd [[ autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references() ]]
+            end
+
+            if client.resolved_capabilities.code_action then
+               vim.cmd [[ au BufWritePre <buffer> lua require("core.autocmds").organizeImports() ]]
+            end
+
+            -- vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.]]
+         end,
          capabilities = capabilities,
          flags = {
             debounce_text_changes = 150,

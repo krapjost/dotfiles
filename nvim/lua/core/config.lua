@@ -1,12 +1,6 @@
--- IMPORTANT NOTE : This is default config, so dont change anything here.
--- use custom/chadrc.lua instead
-
 local M = {}
 
 M.options = {
-   -- custom = {}
-   -- general nvim/vim options , check :h optionname to know more about an option
-
    clipboard = "unnamedplus",
    cmdheight = 1,
    ruler = false,
@@ -17,7 +11,7 @@ M.options = {
    mouse = "a",
    number = true,
    numberwidth = 2,
-   relativenumber = false,
+   relativenumber = true,
    expandtab = true,
    smartindent = true,
    shiftwidth = 4,
@@ -27,19 +21,6 @@ M.options = {
    undofile = true,
    fillchars = { eob = " " },
    shadafile = vim.opt.shadafile,
-
-   -- NvChad options
-   nvChad = {
-      copy_cut = true, -- copy cut text ( x key ), visual and normal mode
-      copy_del = true, -- copy deleted text ( dd key ), visual and normal mode
-      insert_nav = true, -- navigation in insertmode
-      window_nav = true,
-      terminal_numbers = false,
-
-      -- updater
-      update_url = "https://github.com/NvChad/NvChad",
-      update_branch = "main",
-   },
 }
 
 ---- UI -----
@@ -47,10 +28,6 @@ M.options = {
 M.ui = {
    hl_override = "", -- path of your file that contains highlights
    italic_comments = false,
-   theme = "jellybeans", -- default theme
-
-   -- Change terminal bg to nvim theme's bg color so it'll match well
-   -- For Ex : if you have onedark set in nvchad, set onedark's bg color on your terminal
    transparency = false,
 }
 
@@ -61,11 +38,9 @@ M.plugins = {
    status = {
       blankline = true, -- indentline stuff
       bufferline = true, -- manage and preview opened buffers
-      colorizer = false, -- color RGB, HEX, CSS, NAME color codes
+      colorizer = true, -- color RGB, HEX, CSS, NAME color codes
       comment = true, -- easily (un)comment code, language aware
-      alpha = false, -- dashboard
       better_escape = true, -- map to <ESC> with no lag
-      feline = true, -- statusline
       gitsigns = true,
       lspsignature = true, -- lsp enhancements
       vim_matchup = true, -- improved matchit
@@ -127,7 +102,6 @@ M.mappings = {
       copy_to_system_clipboard = "<C-c>", -- copy selected text (visual mode) or curent line (normal)
       line_number_toggle = "<leader>n", -- toggle line number
       relative_line_number_toggle = "<leader>rn",
-      update_nvchad = "<leader>uu",
       new_buffer = "<S-t>",
       new_tab = "<C-t>b",
       save_file = "<C-s>", -- save file using :w
@@ -198,7 +172,6 @@ M.mappings.plugins = {
       list_workspace_folders = "<leader>wl",
       type_definition = "<leader>D",
       rename = "<leader>ra",
-      code_action = "<leader>ca",
       references = "gr",
       float_diagnostics = "ge",
       goto_prev = "[d",
@@ -221,7 +194,6 @@ M.mappings.plugins = {
       help_tags = "<leader>fh",
       live_grep = "<leader>fw",
       oldfiles = "<leader>fo",
-      themes = "<leader>th", -- NvChad theme picker
    },
 }
 
