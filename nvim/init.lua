@@ -40,11 +40,11 @@ g.coq_settings = {
         }
     },
     keymap = {
+        eval_snips = "<leader>j",
         jump_to_mark = "<A-space>",
         recommended = false,
     },
 }
-
 
 
 opt.ignorecase = true
