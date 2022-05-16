@@ -3,9 +3,14 @@
     "Lua.diagnostics.disable": [
         "trailing-space",
         "unused-local",
-        "different-requires"
+        "different-requires",
+        "undefined-global"
     ],
     "Lua.diagnostics.globals": [
-        "vim"
+        "vim",
+        "lua",
+        "leader",
+        "fm",
+        "CR"
     ]
 }

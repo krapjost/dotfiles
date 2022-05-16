@@ -24,7 +24,7 @@ fi
 alias ~~="cd ~/jost/"
 alias vi="nvim"
 alias work="cd ~/projects"
-alias log="cd ~/jost/log"
+alias log="cd ~/jost/log/zola && vi ./content"
 alias ref="cd ~/jost/ref"
 alias tut="cd ~/jost/tutorials"
 alias conf="cd ~/dotfiles && vi .zshrc"
@@ -44,3 +44,17 @@ export GITHUB_PAGE_DIR=~/jost/log/krapjost.github.io
 source $ZSH/oh-my-zsh.sh
 source /usr/share/nvm/init-nvm.sh
 eval "$(ipfs commands completion bash)"
+
+alias luamake=/home/krap/jost/lsp/lua-language-server/3rd/luamake/luamake
+
+function pet-select() {
+  BUFFER=$(pet search --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N pet-select
+stty -ixon
+bindkey '^s' pet-select
+
+eval "$(fasd --init auto)"
+eval "$(thefuck --alias)"
