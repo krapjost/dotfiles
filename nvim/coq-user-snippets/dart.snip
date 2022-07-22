@@ -6,6 +6,7 @@ alias slW
       Widget build(BuildContext context) {
         return Container();
       }
+    }
 
 
 snippet statefulW
@@ -400,8 +401,8 @@ alias vLB
 
 # riverpod snips
 snippet changeNotifier
-    class $1Notifier extends ChangeNotifier {
-      $2
+    class ${1}Notifier extends ChangeNotifier {
+      ${2}
     }
 
 snippet changeNotifierProvider
@@ -417,24 +418,26 @@ snippet changeNotifierProviderFamily
 snippet consumer
   Consumer(
     builder: (context, ref, child) {
-      return $1;
+      return ${1: Container()};
     }
-  )
+  ),
 
-snippet stlessConsumer
-alias slCW
-  class $1 extends ConsumerWidget {
-    const $1({Key? key}) : super(key: key);
+snippet consumerW
+alias consW
+  class ${1: name} extends ConsumerWidget {
+    const ${1: name}({Key? key}) : super(key: key);
+
     @override
     Widget build(BuildContext context, WidgetRef ref) {
-      return Container();
+        final ${2:} = ref.watch(${3:});
+        return ${4: Container()};
     }
   }
 
-snippet stfulConsumer
-alias sfCW
-  class $1 extends ConsumerStatefulWidget {
-    const $1({Key? key}) : super(key: key);
+snippet consumerS
+alias consS
+  class ${1: name} extends ConsumerStatefulWidget {
+    const ${1: name}({Key? key}) : super(key: key);
     @override
     ConsumerState<ConsumerStatefulWidget> createState() => _$1State();
   }
@@ -445,8 +448,8 @@ alias sfCW
     }
   }
 
-snippet stlessHookConsumer
-alias slHCW
+snippet hookConsumerW
+alias hookC
   class $1 extends HookConsumerWidget {
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -454,8 +457,8 @@ alias slHCW
     }
   }
 
-snippet stfulHookConsumer
-alias sfHCW
+snippet sfHookConsumerW
+alias sfH
   class $1 extends StatefulHookConsumerWidget {
     const $1({Key? key}) : super(key: key);
       @override

@@ -1,10 +1,10 @@
 * {
-	font-size: 13px;
-	font-family: pira-code;
+	font-size: 14px;
+	font-family: victor-mono;
 }
 
 window#waybar {
-	background: #000000;
+	background: #3f3f3f;
 	color: #cccccc;
 }
 

@@ -6,9 +6,9 @@
 set $mod Mod4
 # Your preferred terminal emulator
 set $term kitty
+set $emacs "emacsclient -c"
 # Your preferred application launcher
-set $menu "rofi -combi-modi window,drun,ssh -theme sidebar -font 'hack 14' -icon-theme 'Papirus' -show-icons -show combi"
-
+set $menu "rofi -modi drun -show-icons -show drun"
 ### Idle configuration
 exec swayidle -w \
           timeout 300 'swaylock -f' \
@@ -18,12 +18,12 @@ exec swayidle -w \
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-output * bg #000000 solid_color
 
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec mako
 exec persway -a -o 1
+exec --no-startup-id fcitx5 -d
 
 ### Window config
 # custom
@@ -67,8 +67,8 @@ for_window [app_id=".*"] border pixel 1
     # Start your launcher
     bindsym $mod+d exec $menu
 
-    #set background mojave
-    bindsym $mod+Shift+m exec $mojave
+    # Start emacs client
+    bindsym $mod+Shift+e exec $emacs
 
     # Filesearch
 
@@ -222,9 +222,9 @@ bar {
 #
 # gaps
 #
-#gaps outer 10
-#gaps top -10
-#gaps bottom -10
+gaps outer 10
+gaps top -10
+gaps bottom -10
 smart_borders on
 
 #
@@ -240,11 +240,12 @@ hide_edge_borders both
 #
 set $foreground #777777
 set $background #d9d8d8
-set $color1 #231f20
+set $color1 #3f3f3f
 set $color8 #d9d8d8
 set $color6 #ee2e24
 
 #output "*" background $wallpaper fill
+output "*" bg #3f3f3f solid_color
 
 # class                     border      backgr.     text        indicator   child_border
     client.focused          $foreground $background $color6     $foreground $foreground
