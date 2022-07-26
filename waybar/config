@@ -1,10 +1,9 @@
 // -*- mode: json -*-
 
 {
-	"layer": "bottom",
+	"layer": "top",
 	"position": "top",
-	"height": 20,
-
+	"height": 21,
 	"modules-left": [
 		"sway/workspaces",
 	],
@@ -14,12 +13,13 @@
 		"clock#3",
 	],
 	"modules-right": [
+		"tray",
 		"pulseaudio",
 		"memory",
 		"cpu",
 		"battery",
 		"disk",
-		"tray"
+        "network"
 	],
 
 	"sway/workspaces": {
@@ -39,8 +39,11 @@
 		"format": "{:%m-%d}",
 		"tooltip": false
 	},
-
-
+    "network": {
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ethernet",
+        "format-disconnected": "⚠"
+    },
 	"pulseaudio": {
 		"format": "{icon} {volume:2}%",
 		"format-bluetooth": "{icon}  {volume}%",
@@ -58,11 +61,11 @@
 	},
 	"memory": {
 		"interval": 5,
-		"format": "Mem {}%"
+		"format": "M {}%"
 	},
 	"cpu": {
 		"interval": 5,
-		"format": "CPU {usage:2}%"
+		"format": "C {usage:2}%"
 	},
 	"battery": {
 		"states": {
@@ -81,10 +84,10 @@
 	},
 	"disk": {
 		"interval": 5,
-		"format": "Disk {percentage_used:2}%",
+		"format": "D {percentage_used:2}%",
 		"path": "/"
 	},
 	"tray": {
-		"icon-size": 20
+        "icon-size": 15,
 	}
 }

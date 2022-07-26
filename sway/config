@@ -1,12 +1,25 @@
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+input type:touchpad {
+    dwt enabled
+    scroll_method two_finger
+    # natural_scroll enabled
+}
+
+input type:keyboard {
+    repeat_delay 180
+    repeat_rate 50
+}
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Your preferred terminal emulator
 set $term kitty
+set $browser chromium
 set $emacs "emacsclient -c"
+set $wallpaper "/home/krap/Pictures/aerial_view_sand_sea_maldives_islands-wallpaper-3554x1999.jpg"
 # Your preferred application launcher
 set $menu "rofi -modi drun -show-icons -show drun"
 ### Idle configuration
@@ -17,7 +30,6 @@ exec swayidle -w \
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
-
 
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -60,6 +72,7 @@ for_window [app_id=".*"] border pixel 1
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    bindsym $mod+c exec $browser
 
     # Kill focused window
     bindsym $mod+q kill
@@ -222,30 +235,29 @@ bar {
 #
 # gaps
 #
-gaps outer 10
-gaps top -10
-gaps bottom -10
+gaps outer 3
+gaps inner 3
+smart_gaps on
 smart_borders on
+hide_edge_borders none
 
 #
 # Titlebars
 #
-font pango:KanitMedium 9
-default_border pixel 1
-default_floating_border pixel 1
-hide_edge_borders both
+# font pango:KanitMedium 9
+default_border pixel 2
+default_floating_border pixel 2
 
 #
 # Colors & background
 #
 set $foreground #777777
 set $background #d9d8d8
-set $color1 #3f3f3f
+set $color1 #99b492
 set $color8 #d9d8d8
-set $color6 #ee2e24
+set $color6 #d98383
 
-#output "*" background $wallpaper fill
-output "*" bg #3f3f3f solid_color
+output "*" background $wallpaper fill
 
 # class                     border      backgr.     text        indicator   child_border
     client.focused          $foreground $background $color6     $foreground $foreground
