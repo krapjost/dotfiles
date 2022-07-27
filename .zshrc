@@ -70,8 +70,8 @@ alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
+alias v='f -t -e nvim'
 alias luamake=/home/krap/jost/lsp/lua-language-server/3rd/luamake/luamake
-
 
 # TIL 1 xargs = shell argument. fzf | xargs -i {} echo {}
 # TIL 2 ${} = shell parameter expansion, 
@@ -102,10 +102,7 @@ alias luamake=/home/krap/jost/lsp/lua-language-server/3rd/luamake/luamake
 #   ${parameter,pattern}
 #   ${parameter,,pattern}
 #   zsh이랑 bash랑 조금 다르다. 쉡스크립트보단 범용적인걸로 짜야겠다
-cdf () {
-    local dir=$(fd --type d | fzf)
-    cd $dir
-}
+#
 vif () {
     cd ~
     local fullpath=$(fzf)
@@ -117,3 +114,19 @@ vif () {
     # echo $filename
     cd $dirpath && vi $filename
 }
+
+fasd-fzf-cd-vi() {
+   item="$(fasd -Rl "$1" | fzf -1 -0 --no-sort +m)"
+  if [[ -d ${item} ]]; then
+    cd "${item}" || return 1
+  elif [[ -f ${item} ]]; then
+      cd `dirname $item` &&
+    (vi `basename $item` < /dev/tty) || return 1
+  else
+    return 1
+  fi
+   zle accept-line
+} 
+zle -N fasd-fzf-cd-vi
+bindkey '^e' fasd-fzf-cd-vi
+alias vv=fasd-fzf-cd-vi
