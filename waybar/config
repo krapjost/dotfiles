@@ -2,8 +2,7 @@
 
 {
 	"layer": "top",
-	"position": "top",
-	"height": 21,
+	"position": "bottom",
 	"modules-left": [
 		"sway/workspaces",
 	],

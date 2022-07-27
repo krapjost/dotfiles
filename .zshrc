@@ -10,7 +10,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # too many plugins slow down shell startup.
 # https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins 
-plugins=(git lein fasd)
+plugins=(git lein fasd fzf)
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -36,6 +36,8 @@ export JABBA_HOME="$HOME/.jabba"
 export PNPM_HOME="/home/krap/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+# fzf setting
+export FZF_DEFAULT_COMMAND="fd --exclude={.git,.idea,.vscode,.sass-cache,node_modules,build,go/pkg,anaconda3,android-studio,gutenberg_data} --type f"
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/nvm/init-nvm.sh
@@ -56,7 +58,7 @@ eval "$(register-python-argcomplete pipx)"
 
 #alias
 alias ~~="cd ~/jost/"
-alias conf="cd ~/dotfiles && vi ./.zshrc"
+alias conf="cd ~/dotfiles && vi .zshrc"
 alias vi="nvim"
 alias ls="exa --icons"
 alias l="exa -alhbH --git --icons"
@@ -69,3 +71,49 @@ alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 alias luamake=/home/krap/jost/lsp/lua-language-server/3rd/luamake/luamake
+
+
+# TIL 1 xargs = shell argument. fzf | xargs -i {} echo {}
+# TIL 2 ${} = shell parameter expansion, 
+#   s=01234567890abcdefgh
+#   ${s:7}
+#   7890abcdefgh
+#   ${s:7:0}
+#   
+#   ${s:7:2}
+#   78
+#   ${!prefix*}
+#   ${!prefix@}
+#   Expands to the names of variables whose names begin with prefix,
+#   separated by the first character of IFS special variables.
+#   ${!name[@]}
+#   ${!name[*]}
+#   if name is an array, expands to the list of array indices assigned in name.
+#   if not, expands to 0 if name is set and null otherwise.
+#   ${#parameter}
+#   the length in characters of the expanded value of parameter is substituted.
+#   ${parameter#word}
+#   ${parameter##word}
+#   ${parameter%word}
+#   ${parameter%%word}
+#   ${parameter/pattern/string}
+#   ${parameter^pattern}
+#   ${parameter^^pattern}
+#   ${parameter,pattern}
+#   ${parameter,,pattern}
+#   zsh이랑 bash랑 조금 다르다. 쉡스크립트보단 범용적인걸로 짜야겠다
+cdf () {
+    local dir=$(fd --type d | fzf)
+    cd $dir
+}
+vif () {
+    cd ~
+    local fullpath=$(fzf)
+    # 왼쪽부터 마지막 일치하는 /까지 지운다.
+    local filename="${fullpath##*/}"
+    # 오른쪽부터 처음 일치하는 /까지 지운다.
+    local dirpath="${fullpath%/*}"
+    # echo $dirpath
+    # echo $filename
+    cd $dirpath && vi $filename
+}

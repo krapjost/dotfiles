@@ -74,7 +74,7 @@ function Paq.load()
     local function _r(s) return require('configs.' .. s) end
 
     require "zenburn".setup()
-    require 'nvim-tree'.setup()
+    require 'nvim-tree'.setup(_r '_nvim_tree')
     require 'nvim-treesitter.configs'.setup(_r '_treesitter')
     require 'lualine'.setup(_r '_lualine')
     require 'gitsigns'.setup()

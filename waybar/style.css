@@ -3,7 +3,7 @@
 	font-family: victor;
 }
 window#waybar {
-	background: rgba(100,100,100, 0.5);
+	background: rgba(50,50,50, 0.8);
 	color: #ffffff;
 }
 #network {
@@ -13,8 +13,8 @@ window#waybar {
     color: #e5e9f0;
 }
 #workspaces button {
-	padding: 0 2px;
-	color: #5f5f5f;
+	color: #999999;
+	padding: 0 3px;
 }
 #workspaces button.focused {
 	color: #ffffff;
@@ -38,5 +38,5 @@ window#waybar {
 #network,
 #tray,
 #disk {
-	padding: 0 10px;
+	padding: 6px 10px 0px 10px;
 }
