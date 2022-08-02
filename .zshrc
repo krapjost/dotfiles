@@ -1,6 +1,6 @@
 ZSH=/usr/share/oh-my-zsh/
-# ZSH_THEME="emotty"
-ZSH_THEME="zhann"
+ZSH_THEME="random"
+# ZSH_THEME="zhann"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
 
