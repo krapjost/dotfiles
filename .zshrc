@@ -55,6 +55,7 @@ eval "$(ipfs commands completion bash)"
 eval "$(fasd --init auto)"
 eval "$(thefuck --alias)"
 eval "$(register-python-argcomplete pipx)"
+#eval "$(hub alias -s)"
 
 #alias
 alias ~~="cd ~/jost/"

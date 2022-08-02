@@ -3,7 +3,7 @@
 	font-family: victor;
 }
 window#waybar {
-	background: rgba(50,50,50, 0.8);
+	background: rgba(30,30,30, 0.9);
 	color: #ffffff;
 }
 #network {

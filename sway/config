@@ -9,6 +9,7 @@ input type:touchpad {
 input type:keyboard {
     repeat_delay 180
     repeat_rate 50
+    xkb_options caps:escape
 }
 
 ### Variables
@@ -33,6 +34,7 @@ exec swayidle -w \
 
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec python /home/krap/dotfiles/sway/dim-sway.py
 exec mako
 exec persway -a -o 1
 exec --no-startup-id fcitx5 -d
@@ -235,28 +237,22 @@ bar {
 #
 # gaps
 #
-gaps outer 3
-gaps inner 3
+gaps outer 0
+gaps inner 2
 smart_gaps on
 smart_borders on
-hide_edge_borders none
 
-#
-# Titlebars
-#
-# font pango:KanitMedium 9
 default_border pixel 2
-default_floating_border pixel 2
+default_floating_border pixel 4
 
 #
 # Colors & background
 #
-set $foreground #777777
+set $foreground #dfd9ce
 set $background #d9d8d8
 set $color1 #99b492
-set $color8 #d9d8d8
+set $color8 #171717
 set $color6 #d98383
-
 output "*" background $wallpaper fill
 
 # class                     border      backgr.     text        indicator   child_border
