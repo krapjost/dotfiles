@@ -130,4 +130,3 @@ fasd-fzf-cd-vi() {
 } 
 zle -N fasd-fzf-cd-vi
 bindkey '^e' fasd-fzf-cd-vi
-alias vv=fasd-fzf-cd-vi
