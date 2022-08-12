@@ -1,10 +1,10 @@
 // -*- mode: json -*-
-
 {
-	"layer": "top",
+	"ipc": true,
 	"position": "bottom",
 	"modules-left": [
-		"sway/workspaces",
+        "sway/workspaces",
+		"sway/hide",
 	],
 	"modules-center": [
 		"clock#1",
@@ -20,7 +20,6 @@
 		"disk",
         "network"
 	],
-
 	"sway/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
