@@ -13,10 +13,12 @@ input type:keyboard {
 }
 
 ### Variables
-#
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-# Your preferred terminal emulator
+set $ranger "sh /home/krap/dotfiles/sway/float.sh foot -e ranger"
+set $gotop "sh /home/krap/dotfiles/sway/float.sh foot -e gotop"
+set $recorder "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
+set $showkey "wshowkeys -b '#e0d6cb' -f '#1f1c17' -s '#657662' -a top -F 'FiraCode Nerd Font Mono 24' -m 5"
 set $term footclient
 set $browser chromium
 set $emacs "emacsclient -c"
@@ -34,20 +36,23 @@ exec swayidle -w \
 
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /home/krap/Apps/athens.AppImage
 exec python /home/krap/dotfiles/sway/dim-sway.py
 exec foot --server
 exec mako
 exec persway -a -o 1
 exec --no-startup-id fcitx5 -d
 
+for_window [app_id="one.alynx.showmethekey" title="Floating Window - Show Me The Key"] {
+  floating enable
+  sticky enable
+}
+
+for_window [app_id="one.alynx.showmethekey"] floating enable
+
 ### Window config
 # custom
 for_window [app_id=aptus-upgrade] floating enable
-
-# filemanagers
-for_window [app_id=Thunar] floating enable
-for_window [app_id=thunar] floating enable
-for_window [app_id=ranger] floating enable
 
 # dialogs
 for_window [app_id=zenity] floating enable
@@ -86,9 +91,14 @@ for_window [app_id=".*"] border pixel 1
     # Start emacs client
     bindsym $mod+Shift+e exec $emacs
 
-    # Filesearch
+    # Show key press with showmethekey
+    bindsym $mod+Shift+s exec $showkey
 
-    bindsym $mod+Shift+f exec $term --class ranger -e ranger
+    # Show top
+    bindsym $mod+Shift+t exec $gotop
+
+    # Filesearch
+    bindsym $mod+Shift+f exec $ranger
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
@@ -127,7 +137,7 @@ for_window [app_id=".*"] border pixel 1
     bindsym $mod+Shift+p exec grimshot save area
     bindsym $mod+Alt+p   exec grimshot save output
     bindsym $mod+Ctrl+p  exec grimshot save window
-    bindsym $mod+g       exec $term -e ~/bin/swayrec
+    bindsym $mod+g       exec $recorder
 
 #
 # Moving around:

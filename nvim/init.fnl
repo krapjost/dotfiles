@@ -14,7 +14,7 @@
 (set opt.shiftwidth 2)
 (set opt.tabstop 2)
 (set opt.timeoutlen 0)
-(set opt.cmdheight 0)
+(set opt.cmdheight 1)
 (set opt.smartindent true)
 (set opt.expandtab true)
 (set opt.linebreak true)
@@ -94,10 +94,11 @@
 (set-key :n :<leader>fg ":Telescope live_grep<CR>" opts)
 (set-key :n :<leader>fb ":Telescope buffers<CR>" opts)
 (set-key :n :<leader>fh ":Telescope help_tags<CR>" opts)
-
 (set-key :v :<leader>rr
          "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>"
          {:noremap true})
+
+(set-key :n :<C-f>f ":<C-r><C-w>")
 
 (local telescope-layout (preq :telescope.actions.layout))
 
@@ -216,7 +217,8 @@
                                         :preview {}
                                         :mappings {:n {:<C-p> telescope-layout.toggle_preview}
                                                    :i {:<C-p> telescope-layout.toggle_preview}}}}
-                 :refactoring {}})
+                 :refactoring {}
+                 :fidget {}})
 
 (local servers [:sumneko_lua
                 :ltex
@@ -224,7 +226,6 @@
                 :jsonls
                 :pyright
                 :tsserver
-                :eslint
                 :elixirls
                 :rescriptls
                 :clojure_lsp
@@ -233,6 +234,8 @@
 (local pkgs [:savq/paq-nvim
              :udayvir-singh/tangerine.nvim
              :neovim/nvim-lspconfig
+             :j-hui/fidget.nvim
+             :glepnir/lspsaga.nvim
              :nvim-lua/plenary.nvim
              :nvim-lua/popup.nvim
              :nvim-telescope/telescope.nvim
@@ -268,7 +271,7 @@
 
 (setup settings :Comment :nvim-treesitter.configs :nvim-tree :nvim-autopairs
        :lsp_lines :colorizer :leap :zen-mode :trouble :neorg :incline :staline
-       :refactoring :telescope)
+       :refactoring :telescope :fidget)
 
 (local telescope (preq :telescope))
 (telescope.load_extension :refactoring)
@@ -281,18 +284,33 @@
            {:on_attach (fn [client bufnr]
                          (let [capa client.server_capabilities
                                navic (require :nvim-navic)
+                               saga (require :lspsaga)
                                opts {:noremap true :silent true :buffer bufnr}]
                            (navic.attach client bufnr)
+                           (saga.init_lsp_saga {:saga_winblend 10
+                                                :symbol_in_winbar {:in_custom true
+                                                                   :enable true
+                                                                   :separator " "
+                                                                   :show_file true
+                                                                   :click_support false}})
                            (set-key :n :gD vim.lsp.buf.declaration opts)
-                           (set-key :n :gd vim.lsp.buf.definition opts)
+                           (set-key :n :gd
+                                    "<cmd>Lspsaga preview_definition<CR>" opts)
                            (set-key :n :gi vim.lsp.buf.implementation opts)
                            (set-key :n :gr vim.lsp.buf.references opts)
-                           (set-key :n :K vim.lsp.buf.hover opts)
+                           (set-key :n :K "<cmd>Lspsaga hover_doc<CR>" opts)
+                           (set-key :n :gh "<cmd>Lspsaga lsp_finder<CR>" opts)
                            (set-key :n :<C-k> vim.lsp.buf.signature_help opts)
+                           (set-key :n "<leader>'" ":LSoutlineToggle<CR>" opts)
                            (set-key :n :<leader>D vim.lsp.buf.type_definition
                                     opts)
-                           (set-key :n :<leader>rn vim.lsp.buf.rename opts)
-                           (set-key :n :<leader>ca vim.lsp.buf.code_action opts)
+                           (set-key :n :<leader>rn "<cmd>Lspsaga rename<CR>"
+                                    opts)
+                           (set-key :n :<leader>ca
+                                    "<cmd>Lspsaga code_action<CR>" opts)
+                           (set-key :v :<leader>ca
+                                    "<cmd><C-U>Lspsaga range_code_action<CR>"
+                                    opts)
                            (set-key :n :<leader>wa
                                     vim.lsp.buf.add_workspace_folder opts)
                            (set-key :n :<leader>wr
@@ -315,6 +333,67 @@
 
 (lsp-setup)
 (set-leap-keymap)
+
+;; (fn get-file-name [include-path]
+;;   (local symbol (require :lspsaga.symbolwinbar))
+;;   (local file-name (symbol.get_file_name)
+;;          (when (= (vim.fn.bufname "%") "")
+;;            "") (when (= include-path false)
+;;                      file-name)
+;;          (local uname (vim.loop.os_uname))
+;;          (local sep (if (= uname.sysname :Windows) "\\" "/"))
+;;          (local path-list
+;;                 (vim.split (string.gsub (vim.fn.expand "%:~.:h" "%%" "") sep)))
+;;          (var file-path "")
+;;          (icollection [_ cur (ipairs path_list)] (set file-path))))
+
+;; local function get_file_name(include_path)
+;;     local file_name = require('lspsaga.symbolwinbar').get_file_name()
+;;     if vim.fn.bufname '%' == '' then return '' end
+;;     if include_path == false then return file_name end
+;;     -- Else if include path: ./lsp/saga.lua -> lsp > saga.lua
+;;     local sep = vim.loop.os_uname().sysname == 'Windows' and '\\' or '/'
+;;     local path_list = vim.split(string.gsub(vim.fn.expand '%:~:.:h', '%%', ''), sep)
+;;     local file_path = ''
+;;     for _, cur in ipairs(path_list) do
+;;         file_path = (cur == '.' or cur == '~') and '' or
+;;                     file_path .. cur .. ' ' .. '%#LspSagaWinbarSep#>%*' .. ' %*'
+;;     end
+;;     return file_path .. file_name
+;; end
+
+;; local function config_winbar()
+;;     local exclude = {
+;;                      ['teminal'] = true,
+;;                      ['toggleterm'] = true,
+;;                      ['prompt'] = true,
+;;                      ['NvimTree'] = true,
+;;                      ['help'] = true,}
+;;      -- Ignore float windows and exclude filetype
+;;     if vim.api.nvim_win_get_config(0).zindex or exclude[vim.bo.filetype] then
+;;         vim.wo.winbar = ''
+;;     else
+;;         local ok, lspsaga = pcall(require, 'lspsaga.symbolwinbar')
+;;         local sym
+;;         if ok then sym = lspsaga.get_symbol_node() end
+;;         local win_val = ''
+;;         win_val = get_file_name(true) -- set to true to include path
+;;         if sym ~= nil then win_val = win_val .. sym end
+;;         vim.wo.winbar = win_val
+;;     end
+;; end
+;;
+;; local events = { 'BufEnter', 'BufWinEnter', 'CursorMoved'}
+;;
+;; vim.api.nvim_create_autocmd(events, {
+;;                                      pattern = '*',
+;;                                      callback = function() config_winbar() end,})
+;;
+;;
+;; vim.api.nvim_create_autocmd('User', {
+;;                                      pattern = 'LspsagaUpdateSymbol',
+;;                                      callback = function() config_winbar() end,})
+;;
 
 (vim.api.nvim_create_autocmd :BufWritePost
                              {:pattern :*.fnl
