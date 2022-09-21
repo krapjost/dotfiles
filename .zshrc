@@ -130,3 +130,4 @@ fasd-fzf-cd-vi() {
 } 
 zle -N fasd-fzf-cd-vi
 bindkey '^e' fasd-fzf-cd-vi
+alias ptest="sh /home/krap/work/personal/c/42/PTEST/test.sh"
