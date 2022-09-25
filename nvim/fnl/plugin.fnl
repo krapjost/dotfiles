@@ -1,6 +1,6 @@
-(local u (require :utils))
+(local {: setup-plugins : init-plugins} (require :utils))
 
-((require :paq) [:savq/paq-nvim
+((require :paq) [:savq/paq-nvim.git
                  :udayvir-singh/tangerine.nvim
                  :neovim/nvim-lspconfig
                  :j-hui/fidget.nvim
@@ -14,12 +14,13 @@
                  :folke/zen-mode.nvim
                  :folke/which-key.nvim
                  :folke/trouble.nvim
-                 ;; for clojure
+                 :folke/todo-comments.nvim
                  :junegunn/fzf
                  :guns/vim-sexp
+                 :tpope/vim-sexp-mappings-for-regular-people
+                 :tpope/vim-repeat
+                 :tpope/vim-surround
                  :liquidz/vim-iced
-                 ;; :Olical/conjure
-                 ;; :eraserhd/parinfer-rust
                  :gpanders/nvim-parinfer
                  :windwp/nvim-autopairs
                  :nvim-treesitter/nvim-treesitter
@@ -27,7 +28,6 @@
                  :p00f/nvim-ts-rainbow
                  :SmiteshP/nvim-navic
                  :timuntersberger/neogit
-                 :nvim-neorg/neorg
                  :numToStr/Comment.nvim
                  {:url "https://git.sr.ht/~whynothugo/lsp_lines.nvim"}
                  {:url "https://git.sr.ht/~technomancy/fnlfmt"}
@@ -37,19 +37,14 @@
                  :ms-jpq/coq.artifacts
                  :rescript-lang/vim-rescript
                  :nkrkv/nvim-treesitter-rescript
-                 :ThePrimeagen/refactoring.nvim
-                 ;; :akinsho/flutter-tools.nvim
+                 :akinsho/toggleterm.nvim
                  :tamton-aquib/staline.nvim
-                 :projekt0n/github-nvim-theme
-                 :vim-syntastic/syntastic
-                 :alexandregv/norminette-vim
+                 :rktjmp/lush.nvim
+                 :mcchrish/zenbones.nvim
                  :ggandor/leap.nvim])
 
-(u.setup-plugin-config :nvim-tree :nvim-treesitter.configs :nvim-autopairs
-                       :zen-mode :colorizer :Comment :lsp_lines :leap :trouble
-                       :staline :neorg :telescope :refactoring :fidget)
+(setup-plugins :nvim-tree :nvim-autopairs :staline :nvim-treesitter.configs
+               :zen-mode :colorizer :Comment :lsp_lines :leap :trouble
+               :telescope :fidget :toggleterm :todo-comments)
 
-(require :plugin.which-key)
-(require :plugin.coq)
-(require :plugin.leap)
-(require :plugin.lspconfig)
+(init-plugins :coq :leap :lspconfig :sexp :which-key)

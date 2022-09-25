@@ -1,10 +1,12 @@
--- :fennel:1663746575
+-- :fennel:1664083016
 local opt = vim.opt
 local g = vim.g
 g.mapleader = " "
+g.maplocalleader = ","
 opt.laststatus = 3
 opt.autoread = true
 opt.termguicolors = true
+opt.background = "dark"
 opt.ignorecase = true
 opt.cursorline = true
 opt.smartcase = true

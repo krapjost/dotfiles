@@ -1,17 +1,6 @@
 :return
 
-{:ensure_installed [:python
-                    :lua
-                    :fennel
-                    :clojure
-                    :commonlisp
-                    :markdown
-                    :dart
-                    :javascript
-                    :typescript
-                    :json
-                    :norg
-                    :ocaml]
+{:ensure_installed [:lua :fennel :clojure :markdown :dart :typescript]
  :autotag {:enable true}
  :textobjects {:move {:enable true
                       :set_jumps true
@@ -36,5 +25,9 @@
                                   :am "@comment.outer"}}}
  :sync_install false
  :auto_install true
- :highlight {:enable true}
+ :incremental_selection {:enable true
+                         :keymaps {:init_selection :<leader>s
+                                   :node_incremental :<leader>i
+                                   :node_decremental :<leader>d}}
+ :highlight {:enable true :additional_vim_regex_highlighting [:clojure]}
  :rainbow {:enable true :extended_mode true}}

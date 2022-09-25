@@ -1,7 +1,7 @@
--- :fennel:1663759026
-vim.diagnostic.config({signs = false, virtual_text = false, virtual_lines = {only_current_line = true}})
+-- :fennel:1664077640
+vim.diagnostic.config({signs = true, virtual_lines = {only_current_line = true}, virtual_text = false})
 require("option")
 require("plugin")
 require("keymap")
 require("autocmd")
-return vim.cmd("colorscheme github_dark_default")
+return vim.cmd("colorscheme seoulbones")

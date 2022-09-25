@@ -1,23 +1,41 @@
-(lambda safe-setup [plugin ?config]
+(λ safe-setup [plugin ?config]
+  "setup with config table located in plugins dir; if file is not exists, setup with empty table."
   (if (not= plugin nil)
       (plugin.setup (or ?config {}))
-      (vim.pretty_print (.. "missing plugin :: " plugin))))
+      (vim.pretty_print (.. "Missing plugin is :: " plugin))))
 
 (fn preq [name]
+  "safe require using pcall."
   (let [(ok? value) (pcall require name)]
     (if ok?
         value
         nil)))
 
-(fn setup-plugin-config [...]
+(fn preq-conf [name]
+  (preq (.. :plugins. name)))
+
+(fn setup-plugins [...]
+  "init plugins which needs to setup."
   (each [_ name (ipairs [...])]
     (let [plugin (preq name)
-          config (preq (.. :plugin. name))]
+          config (preq-conf name)]
       (safe-setup plugin config))))
 
-(lambda set-keymap [lhs rhs ?opts ?mode]
-  (vim.keymap.set (or ?mode :n) lhs rhs (or ?opts {:noremap true :silent true})))
+(fn init-plugins [...]
+  "init plugins which doesn't needs to setup."
+  (each [_ name (ipairs [...])]
+    (preq-conf name)))
+
+(fn make-opts [desc ?bufnr ?silent]
+  {: desc :buffer (or ?bufnr false) :silent (or ?silent true)})
+
+(λ map [lhs rhs desc ?leader ?mode ?bufnr]
+  "key mapping."
+  (let [m (or ?mode :n)
+        l (or ?leader "")
+        o (make-opts desc ?bufnr)]
+    (vim.keymap.set m (.. l lhs) rhs o)))
 
 :return
 
-{: preq : setup-plugin-config : set-keymap}
+{: preq : setup-plugins : init-plugins : map}
