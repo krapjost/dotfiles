@@ -1,8 +1,7 @@
-(local wk (require :which-key))
-(wk.register {:<leader> {:g {:name :+Git}
-                         :j {:name :+Jump}
-                         :t {:name :+Toggle}
-                         :i {:name :+Iced}
-                         :f {:name :+Find}
-                         :l {:name :+Lsp}
-                         :b {:name :+Buffer :o {:name :+Order}}}})
+:return
+
+{:window {:border :none
+          :position :bottom
+          :margin [1 0 1 0]
+          :padding [2 2 2 2]
+          :winblend 10}}

@@ -21,7 +21,6 @@
                  :tpope/vim-repeat
                  :tpope/vim-surround
                  :liquidz/vim-iced
-                 :gpanders/nvim-parinfer
                  :windwp/nvim-autopairs
                  :nvim-treesitter/nvim-treesitter
                  :nvim-treesitter/nvim-treesitter-textobjects
@@ -45,6 +44,6 @@
 
 (setup-plugins :nvim-tree :nvim-autopairs :staline :nvim-treesitter.configs
                :zen-mode :colorizer :Comment :lsp_lines :leap :trouble
-               :telescope :fidget :toggleterm :todo-comments)
+               :telescope :fidget :toggleterm :todo-comments :which-key)
 
-(init-plugins :coq :leap :lspconfig :sexp :which-key)
+(init-plugins :coq :leap :lspconfig :sexp)

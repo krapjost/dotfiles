@@ -1,37 +1,10 @@
 (local {: map} (require :utils))
 (local todo (require :todo-comments))
-
-(map :j= todo.jump_next "Next todo" :<leader>)
-(map :j- todo.jump_prev "Prev todo" :<leader>)
-(map "j]" vim.diagnostic.goto_next "Next diagnostic" :<leader>)
-(map "j[" vim.diagnostic.goto_prev "Prev diagnostic" :<leader>)
-
-(map :tt ":ToggleTerm<CR>" :Terminal :<leader>)
-(map :tn ":NvimTreeToggle<CR>" :Nerdtree :<leader>)
-
-(map :ft ":TodoTelescope<CR>" :Todos :<leader>)
-(map :ff ":Telescope find_files<CR>" :Files :<leader>)
-(map :fg ":Telescope live_grep<CR>" "Live grep" :<leader>)
-(map :fb ":Telescope buffers<CR>" :Buffers :<leader>)
-(map :fm ":Telescope man_pages<CR>" "Man pages" :<leader>)
-(map :fc ":Telescope colorscheme<CR>" :Colorscheme :<leader>)
-(map :fk ":Telescope keymaps<CR>" :Keymaps :<leader>)
-
-(map :bon ":BufferOrderByBufferNumber<CR>" "By number" :<leader>)
-(map :bod ":BufferOrderByDirectory<CR>" "By directory" :<leader>)
-(map :bc ":BufferClose<CR>" "Close current" :<leader>)
-(map :bw ":BufferCloseAllButCurrentOrPinned<CR>" "Close all but current"
-     :<leader>)
-
-(map :bp ":BufferPrevious<CR>" "Prev buffer" :<leader>)
-(map :bn ":BufferNext<CR>" "Next buffer" :<leader>)
-(map :b1 ":BufferGoto 1<CR>" "1st buffer" :<leader>)
-(map :b2 ":BufferGoto 2<CR>" "2nd buffer" :<leader>)
-(map :b3 ":BufferGoro 3<CR>" "3rd buffer" :<leader>)
-(map :bb ":BufferPick<CR>" "Pick buffer" :<leader>)
+(local {: register} (require :which-key))
+(set vim.g.mapleader " ")
+(set vim.g.maplocalleader ",")
 
 (map "?" ":WhichKey<CR>" "Show keymaps" :<leader>)
-
 (map :<C-h> :<C-w>h "Move left")
 (map :<C-j> :<C-w>j "Move down")
 (map :<C-k> :<C-w>k "Move up")
@@ -41,26 +14,93 @@
 (map :<C-j> "<C-\\><C-n>:wincmd j<CR>" "Move down" nil :t)
 (map :<C-k> "<C-\\><C-n>:wincmd k<CR>" "Move up" nil :t)
 (map :<C-l> "<C-\\><C-n>:wincmd l<CR>" "Move right" nil :t)
-
 (map :<C-f>f ":<C-r><C-w>" "yank word under cursor into cmd")
 
-(fn set-lsp-keymaps [bufnr]
-  (map :gD vim.lsp.buf.declaration "Goto declaration" nil nil bufnr)
-  (map :gd "<cmd>Lspsaga peek_definition<CR>" "Peek definition" nil nil bufnr)
-  (map :gi vim.lsp.buf.implementation "Goto implementation" nil nil bufnr)
-  (map :gr vim.lsp.buf.references "Goto references" nil nil bufnr)
-  (map :fm vim.lsp.buf.format :Format nil nil bufnr)
-  (map :K "<cmd>Lspsaga hover_doc<CR>" "Hover doc" nil nil bufnr)
-  (map :gh "<cmd>Lspsaga lsp_finder<CR>" :Finder nil nil bufnr)
-  (map :<C-k> vim.lsp.buf.signature_help :Help nil nil bufnr)
-  (map :to ":LSoutlineToggle<CR>" "Lsp outline" nil nil bufnr)
-  (map :D vim.lsp.buf.type_definition "Type definition" nil nil bufnr)
-  (map :rn "<cmd>Lspsaga rename<CR>" :Rename nil nil bufnr)
-  (map :ca "<cmd>Lspsaga code_action<CR>" "Code action" nil nil bufnr)
-  (map :ca "<cmd><C-U>Lspsaga range_code_action<CR>" "Code action" nil :v bufnr)
-  (map :wa vim.lsp.buf.add_workspace_folder "Add workspace" nil nil bufnr)
-  (map :wr vim.lsp.buf.remove_workspace_folder "Remove workspace" nil nil bufnr))
+(fn map-jump [leader]
+  (register {:j {:name :+Jump
+                 := [todo.jump_next "Todo next"]
+                 :- [todo.jump_prev "Todo prev"]
+                 "]" [vim.diagnostic.goto_next "Diagnostic Next"]
+                 "[" [vim.diagnostic.goto_prev "Diagnostic Prev"]}}
+            {:prefix leader}))
+
+(fn map-toggle [leader]
+  (register {:t {:name :+Toggle
+                 :t [":ToggleTerm<CR>" :Terminal]
+                 :n [":NvimTreeToggle<CR>" :Nerdtree]}}
+            {:prefix leader}))
+
+(fn map-find [leader]
+  (register {:f {:name :+Find
+                 :t [":TodoTelescope<CR>" :Todos]
+                 :f [":Telescope find_files<CR>" :Files]
+                 :g [":Telescope live_grep<CR>" "Live grep"]
+                 :b [":Telescope buffers<CR>" :Buffers]
+                 :m [":Telescope man_pages<CR>" :Man]
+                 :c [":Telescope colorscheme<CR>" :Colorscheme]
+                 :k [":Telescope keymaps<CR>" :Keymaps]}}
+            {:prefix leader}))
+
+(fn map-buffer [leader]
+  (register {:b {:name :+Buffer
+                 :c [":BufferClose<CR>" "Close current"]
+                 :w [":BufferCloseAllButCurrentOrPinned<CR>" "Close all but"]
+                 :p [":BufferPrevious<CR>" "Goto prev"]
+                 :n [":BufferNext<CR>" "Goto next"]
+                 :1 [":BufferGoto 1<CR>" "Goto 1st"]
+                 :2 [":BufferGoto 2<CR>" "Goto 2nd"]
+                 :3 [":BufferGoto 3<CR>" "Goto 3rd"]
+                 :P [":BufferPin<CR>" :Pin]
+                 :b [":BufferPick<CR>" :Pick]
+                 :o {:name :+Order
+                     :n [":BufferOrderByBufferNumber<CR>" "By number"]
+                     :d [":BufferOrderByDirectory<CR>" "By directory"]}}}
+            {:prefix leader}))
+
+(fn map-defaults []
+  (map-toggle " ")
+  (map-buffer " ")
+  (map-find " ")
+  (map-jump " "))
+
+(map-defaults)
+
+(fn map-for-language [name leader bufnr]
+  (when (= name :rescriptls)
+    (register {:r {:name :+Rescript
+                   :b [":RescriptBuild<CR>" :Build]
+                   :c [":RescriptClean<CR>" :Clean]}}
+              {:prefix leader :buffer bufnr})))
+
+(fn map-when-lsp [capa leader bufnr]
+  (local mappings {leader {}})
+  (local opts {:buffer bufnr})
+  (local b vim.lsp.buf)
+  (when capa.declarationProvider
+    (tset mappings leader :D [b.declaration :Declaration]))
+  (when capa.definitionProvider
+    (tset mappings leader :h [":Lspsaga lsp_finder<CR>" :Finder])
+    (tset mappings leader :d [":Lspsaga peek_definition<CR>" :Definition]))
+  (when capa.implementationProvider
+    (tset mappings leader :i [b.implementation :Implementation]))
+  (when capa.referencesProvider
+    (tset mappings leader :r [b.references :References]))
+  (when capa.typeDefinitionProvider
+    (tset mappings leader :t [b.type_definition :Type]))
+  (when capa.renameProvider
+    (tset mappings leader :n [":Lspsaga rename<CR>" :Rename]))
+  (when capa.documentFormattingProvider
+    (tset mappings leader :f [b.format :Format]))
+  (when capa.codeActionProvider
+    (tset mappings leader :c [":Lspsaga code_action<CR>" "Code action"]))
+  (when capa.signatureHelpProvider
+    (tset mappings leader :k [b.signature_help "Signature help"]))
+  (when capa.hoverProvider
+    (tset mappings leader :K [":Lspsaga hover_doc<CR>" :Hover]))
+  (when capa.documentSymbolProvider
+    (tset mappings leader :o [":LSoutlineToggle<CR>" "Toggle outline"]))
+  (register mappings opts))
 
 :return
 
-{: set-lsp-keymaps}
+{: map-when-lsp : map-for-language}

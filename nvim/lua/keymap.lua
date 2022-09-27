@@ -1,30 +1,11 @@
--- :fennel:1664101678
+-- :fennel:1664278499
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local todo = require("todo-comments")
-map("j=", todo.jump_next, "Next todo", "<leader>")
-map("j-", todo.jump_prev, "Prev todo", "<leader>")
-map("j]", vim.diagnostic.goto_next, "Next diagnostic", "<leader>")
-map("j[", vim.diagnostic.goto_prev, "Prev diagnostic", "<leader>")
-map("tt", ":ToggleTerm<CR>", "Terminal", "<leader>")
-map("tn", ":NvimTreeToggle<CR>", "Nerdtree", "<leader>")
-map("ft", ":TodoTelescope<CR>", "Todos", "<leader>")
-map("ff", ":Telescope find_files<CR>", "Files", "<leader>")
-map("fg", ":Telescope live_grep<CR>", "Live grep", "<leader>")
-map("fb", ":Telescope buffers<CR>", "Buffers", "<leader>")
-map("fm", ":Telescope man_pages<CR>", "Man pages", "<leader>")
-map("fc", ":Telescope colorscheme<CR>", "Colorscheme", "<leader>")
-map("fk", ":Telescope keymaps<CR>", "Keymaps", "<leader>")
-map("bon", ":BufferOrderByBufferNumber<CR>", "By number", "<leader>")
-map("bod", ":BufferOrderByDirectory<CR>", "By directory", "<leader>")
-map("bc", ":BufferClose<CR>", "Close current", "<leader>")
-map("bw", ":BufferCloseAllButCurrentOrPinned<CR>", "Close all but current", "<leader>")
-map("bp", ":BufferPrevious<CR>", "Prev buffer", "<leader>")
-map("bn", ":BufferNext<CR>", "Next buffer", "<leader>")
-map("b1", ":BufferGoto 1<CR>", "1st buffer", "<leader>")
-map("b2", ":BufferGoto 2<CR>", "2nd buffer", "<leader>")
-map("b3", ":BufferGoro 3<CR>", "3rd buffer", "<leader>")
-map("bb", ":BufferPick<CR>", "Pick buffer", "<leader>")
+local _local_2_ = require("which-key")
+local register = _local_2_["register"]
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 map("?", ":WhichKey<CR>", "Show keymaps", "<leader>")
 map("<C-h>", "<C-w>h", "Move left")
 map("<C-j>", "<C-w>j", "Move down")
@@ -36,21 +17,81 @@ map("<C-j>", "<C-\\><C-n>:wincmd j<CR>", "Move down", nil, "t")
 map("<C-k>", "<C-\\><C-n>:wincmd k<CR>", "Move up", nil, "t")
 map("<C-l>", "<C-\\><C-n>:wincmd l<CR>", "Move right", nil, "t")
 map("<C-f>f", ":<C-r><C-w>", "yank word under cursor into cmd")
-local function set_lsp_keymaps(bufnr)
-  map("gD", vim.lsp.buf.declaration, "Goto declaration", nil, nil, bufnr)
-  map("gd", "<cmd>Lspsaga peek_definition<CR>", "Peek definition", nil, nil, bufnr)
-  map("gi", vim.lsp.buf.implementation, "Goto implementation", nil, nil, bufnr)
-  map("gr", vim.lsp.buf.references, "Goto references", nil, nil, bufnr)
-  map("fm", vim.lsp.buf.format, "Format", nil, nil, bufnr)
-  map("K", "<cmd>Lspsaga hover_doc<CR>", "Hover doc", nil, nil, bufnr)
-  map("gh", "<cmd>Lspsaga lsp_finder<CR>", "Finder", nil, nil, bufnr)
-  map("<C-k>", vim.lsp.buf.signature_help, "Help", nil, nil, bufnr)
-  map("to", ":LSoutlineToggle<CR>", "Lsp outline", nil, nil, bufnr)
-  map("D", vim.lsp.buf.type_definition, "Type definition", nil, nil, bufnr)
-  map("rn", "<cmd>Lspsaga rename<CR>", "Rename", nil, nil, bufnr)
-  map("ca", "<cmd>Lspsaga code_action<CR>", "Code action", nil, nil, bufnr)
-  map("ca", "<cmd><C-U>Lspsaga range_code_action<CR>", "Code action", nil, "v", bufnr)
-  map("wa", vim.lsp.buf.add_workspace_folder, "Add workspace", nil, nil, bufnr)
-  return map("wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace", nil, nil, bufnr)
+local function map_jump(leader)
+  return register({j = {name = "+Jump", ["="] = {todo.jump_next, "Todo next"}, ["-"] = {todo.jump_prev, "Todo prev"}, ["]"] = {vim.diagnostic.goto_next, "Diagnostic Next"}, ["["] = {vim.diagnostic.goto_prev, "Diagnostic Prev"}}}, {prefix = leader})
 end
-return {["set-lsp-keymaps"] = set_lsp_keymaps}
+local function map_toggle(leader)
+  return register({t = {name = "+Toggle", t = {":ToggleTerm<CR>", "Terminal"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}}, {prefix = leader})
+end
+local function map_find(leader)
+  return register({f = {name = "+Find", t = {":TodoTelescope<CR>", "Todos"}, f = {":Telescope find_files<CR>", "Files"}, g = {":Telescope live_grep<CR>", "Live grep"}, b = {":Telescope buffers<CR>", "Buffers"}, m = {":Telescope man_pages<CR>", "Man"}, c = {":Telescope colorscheme<CR>", "Colorscheme"}, k = {":Telescope keymaps<CR>", "Keymaps"}}}, {prefix = leader})
+end
+local function map_buffer(leader)
+  return register({b = {name = "+Buffer", c = {":BufferClose<CR>", "Close current"}, w = {":BufferCloseAllButCurrentOrPinned<CR>", "Close all but"}, p = {":BufferPrevious<CR>", "Goto prev"}, n = {":BufferNext<CR>", "Goto next"}, ["1"] = {":BufferGoto 1<CR>", "Goto 1st"}, ["2"] = {":BufferGoto 2<CR>", "Goto 2nd"}, ["3"] = {":BufferGoto 3<CR>", "Goto 3rd"}, P = {":BufferPin<CR>", "Pin"}, b = {":BufferPick<CR>", "Pick"}, o = {name = "+Order", n = {":BufferOrderByBufferNumber<CR>", "By number"}, d = {":BufferOrderByDirectory<CR>", "By directory"}}}}, {prefix = leader})
+end
+local function map_defaults()
+  map_toggle(" ")
+  map_buffer(" ")
+  map_find(" ")
+  return map_jump(" ")
+end
+map_defaults()
+local function map_for_language(name, leader, bufnr)
+  if (name == "rescriptls") then
+    return register({r = {name = "+Rescript", b = {":RescriptBuild<CR>", "Build"}, c = {":RescriptClean<CR>", "Clean"}}}, {prefix = leader, buffer = bufnr})
+  else
+    return nil
+  end
+end
+local function map_when_lsp(capa, leader, bufnr)
+  local mappings = {[leader] = {}}
+  local opts = {buffer = bufnr}
+  local b = vim.lsp.buf
+  if capa.declarationProvider then
+    mappings[leader]["D"] = {b.declaration, "Declaration"}
+  else
+  end
+  if capa.definitionProvider then
+    mappings[leader]["h"] = {":Lspsaga lsp_finder<CR>", "Finder"}
+    mappings[leader]["d"] = {":Lspsaga peek_definition<CR>", "Definition"}
+  else
+  end
+  if capa.implementationProvider then
+    mappings[leader]["i"] = {b.implementation, "Implementation"}
+  else
+  end
+  if capa.referencesProvider then
+    mappings[leader]["r"] = {b.references, "References"}
+  else
+  end
+  if capa.typeDefinitionProvider then
+    mappings[leader]["t"] = {b.type_definition, "Type"}
+  else
+  end
+  if capa.renameProvider then
+    mappings[leader]["n"] = {":Lspsaga rename<CR>", "Rename"}
+  else
+  end
+  if capa.documentFormattingProvider then
+    mappings[leader]["f"] = {b.format, "Format"}
+  else
+  end
+  if capa.codeActionProvider then
+    mappings[leader]["c"] = {":Lspsaga code_action<CR>", "Code action"}
+  else
+  end
+  if capa.signatureHelpProvider then
+    mappings[leader]["k"] = {b.signature_help, "Signature help"}
+  else
+  end
+  if capa.hoverProvider then
+    mappings[leader]["K"] = {":Lspsaga hover_doc<CR>", "Hover"}
+  else
+  end
+  if capa.documentSymbolProvider then
+    mappings[leader]["o"] = {":LSoutlineToggle<CR>", "Toggle outline"}
+  else
+  end
+  return register(mappings, opts)
+end
+return {["map-when-lsp"] = map_when_lsp, ["map-for-language"] = map_for_language}

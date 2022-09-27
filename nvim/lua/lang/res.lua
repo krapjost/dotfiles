@@ -1,13 +1,4 @@
--- :fennel:1663762096
-vim.opt.omnifunc = "rescript#Complete"
-local opts = {noremap = true, silent = true}
-local function rescript_keymap()
-  vim.keymap.set("n", "<leader>rf", ":RescriptFormat<CR>", opts)
-  vim.keymap.set("n", "<leader>rt", ":RescriptTypeHint<CR>", opts)
-  vim.keymap.set("n", "<leader>rb", ":RescriptBuild<CR>", opts)
-  return vim.keymap.set("n", "gd", ":RescriptJumpToDefinition<CR>", opts)
-end
-local function attach_res_au()
-  return vim.api.nvim_create_autocmd("BufEnter", {pattern = "*.res", callback = rescript_keymap})
-end
-return attach_res_au
+-- :fennel:1664266116
+local data_dir = vim.fn.stdpath("data")
+local rescript_cmd = {"node", (data_dir .. "/site/pack/paqs/start/vim-rescript/server/out/server.js"), "--stdio"}
+return {["rescript-cmd"] = rescript_cmd}
