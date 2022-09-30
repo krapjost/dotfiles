@@ -94,6 +94,20 @@
                    :c [":RescriptClean<CR>" :Clean]}}
               {:prefix leader :buffer bufnr})))
 
+(fn map-for-git [leader bufnr]
+  (local gs (require :gitsigns))
+  (register {:s {:name :+GitSigns
+                 :S [gs.stage_buffer :Stage]
+                 :u [gs.undo_stage_hunk :Undo]
+                 :R [gs.reset_buffer :Reset]
+                 :p [gs.preview_hunk :Preview]
+                 :B [#(gs.blame_line {:full true}) :Blame]
+                 :b [gs.toggle_current_line_blame :Toggle-blame]
+                 :d [gs.diffthis :Diffthis]
+                 :D [#(gs.diffthis "~") :Diffthis-what]
+                 :t [gs.toggle_deleted :Toggle-deleted]}}
+            {:prefix leader :buffer bufnr}))
+
 (fn map-when-lsp [capa leader bufnr]
   (local mappings {leader {}})
   (local opts {:buffer bufnr})
@@ -124,4 +138,4 @@
 
 :return
 
-{: map-when-lsp : map-for-language}
+{: map-when-lsp : map-for-language : map-for-git}

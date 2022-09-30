@@ -1,8 +1,10 @@
--- :fennel:1664544297
+-- :fennel:1664562745
 vim.diagnostic.config({signs = true, virtual_text = false, virtual_lines = false})
 local lspconfig = require("lspconfig")
 local cmp_lsp = require("cmp_nvim_lsp")
 local servers = {"sumneko_lua", "clojure_lsp", "dartls", "rescriptls", "ltex"}
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "solid"})
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "solid"})
 local function setup_lsp(client, bufnr)
   local _let_1_ = client
   local capa = _let_1_["server_capabilities"]
