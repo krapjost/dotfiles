@@ -1,5 +1,6 @@
--- :fennel:1663762092
-local function attach_fnlfmt()
-  return vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*.fnl", command = "silent! !fnlfmt --fix %:p"})
+-- :fennel:1664290550
+local function _1_()
+  vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*.fnl", command = "silent! !fnlfmt --fix %:p"})
+  return vim.cmd("ia lam \206\187")
 end
-return attach_fnlfmt
+return _1_

@@ -1,12 +1,15 @@
 (local u (require :utils))
 (local telescope-layout (u.preq :telescope.actions.layout))
 (local telescope (u.preq :telescope))
-(telescope.load_extension :refactoring)
+(telescope.load_extension :project)
 
 :return
 
-{:defaults {"dynamic_preview_title:" true
-            :winblend 10
+{:defaults {:extensions {:project {:base_dirs ["~/dotfiles" "~/project"]
+                                   :hidden_files true
+                                   :order_by :asc}}
+            "dynamic_preview_title:" true
+            :winblend 0
             :borderchars [" " " " " " " " " " " " " " " "]
             :layout_strategy :flex
             :layout_config {:horizontal {:prompt_position :top

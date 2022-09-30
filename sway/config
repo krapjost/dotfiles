@@ -16,13 +16,14 @@ input type:keyboard {
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 set $ranger "sh /home/krap/dotfiles/sway/float.sh foot -e ranger"
-set $gotop "sh /home/krap/dotfiles/sway/float.sh foot -e gotop"
+set $btm "sh /home/krap/dotfiles/sway/float.sh foot -e btm"
 set $recorder "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
+set $record_gif "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -g "$(slurp)" -F fps=30 -c gif -f ~/Videos/$(date +%y%m%d_%T).gif"
 set $showkey "wshowkeys -b '#e0d6cb' -f '#1f1c17' -s '#657662' -a top -F 'FiraCode Nerd Font Mono 24' -m 5"
 set $term footclient
 set $browser chromium
 set $emacs "emacsclient -c"
-set $wallpaper "/home/krap/jost/wallpaper/tb.58.jpg"
+set $wallpaper "/home/krap/Pictures/wallpaper/002.jpg"
 # Your preferred application launcher
 set $menu "rofi -modi drun -show-icons -show drun"
 ### Idle configuration
@@ -36,7 +37,6 @@ exec swayidle -w \
 
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec /home/krap/Apps/athens.AppImage
 exec python /home/krap/dotfiles/sway/dim-sway.py
 exec foot --server
 exec mako
@@ -95,7 +95,7 @@ for_window [app_id=".*"] border pixel 1
     bindsym $mod+Shift+s exec $showkey
 
     # Show top
-    bindsym $mod+Shift+t exec $gotop
+    bindsym $mod+Shift+t exec $btm
 
     # Filesearch
     bindsym $mod+Shift+f exec $ranger
@@ -137,7 +137,8 @@ for_window [app_id=".*"] border pixel 1
     bindsym $mod+Shift+p exec grimshot save area
     bindsym $mod+Alt+p   exec grimshot save output
     bindsym $mod+Ctrl+p  exec grimshot save window
-    bindsym $mod+g       exec $recorder
+    # bindsym $mod+g       exec $recorder
+    bindsym $mod+g       exec $record_gif
 
 #
 # Moving around:

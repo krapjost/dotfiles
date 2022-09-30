@@ -2,48 +2,51 @@
 
 ((require :paq) [:savq/paq-nvim.git
                  :udayvir-singh/tangerine.nvim
-                 :neovim/nvim-lspconfig
-                 :j-hui/fidget.nvim
-                 :glepnir/lspsaga.nvim
                  :nvim-lua/plenary.nvim
                  :nvim-lua/popup.nvim
-                 :nvim-telescope/telescope.nvim
                  :kyazdani42/nvim-web-devicons
-                 :lewis6991/gitsigns.nvim
+                 :j-hui/fidget.nvim
+                 :neovim/nvim-lspconfig
+                 :nvim-telescope/telescope.nvim
+                 :nvim-telescope/telescope-project.nvim
                  :romgrk/barbar.nvim
+                 :SmiteshP/nvim-navic
+                 :tamton-aquib/staline.nvim
                  :folke/zen-mode.nvim
                  :folke/which-key.nvim
                  :folke/trouble.nvim
                  :folke/todo-comments.nvim
-                 :junegunn/fzf
+                 :kyazdani42/nvim-tree.lua
                  :guns/vim-sexp
-                 :tpope/vim-sexp-mappings-for-regular-people
                  :tpope/vim-repeat
                  :tpope/vim-surround
-                 :liquidz/vim-iced
+                 :numToStr/Comment.nvim
+                 :ggandor/leap.nvim
                  :windwp/nvim-autopairs
+                 [:eraserhd/parinfer-rust {:run "cargo build --release"}]
                  :nvim-treesitter/nvim-treesitter
                  :nvim-treesitter/nvim-treesitter-textobjects
                  :p00f/nvim-ts-rainbow
-                 :SmiteshP/nvim-navic
+                 :lewis6991/gitsigns.nvim
                  :timuntersberger/neogit
-                 :numToStr/Comment.nvim
                  {:url "https://git.sr.ht/~whynothugo/lsp_lines.nvim"}
                  {:url "https://git.sr.ht/~technomancy/fnlfmt"}
-                 :kyazdani42/nvim-tree.lua
                  :norcalli/nvim-colorizer.lua
-                 :ms-jpq/coq_nvim
-                 :ms-jpq/coq.artifacts
-                 :rescript-lang/vim-rescript
-                 :nkrkv/nvim-treesitter-rescript
-                 :akinsho/toggleterm.nvim
-                 :tamton-aquib/staline.nvim
+                 :L3MON4D3/LuaSnip
+                 :saadparwaiz1/cmp_luasnip
+                 :hrsh7th/cmp-nvim-lsp
+                 :hrsh7th/cmp-buffer
+                 :hrsh7th/cmp-path
+                 :hrsh7th/cmp-cmdline
+                 :hrsh7th/nvim-cmp
+                 [:rescript-lang/vim-rescript {:opt true}]
+                 [:nkrkv/nvim-treesitter-rescript {:opt true}]
                  :rktjmp/lush.nvim
                  :mcchrish/zenbones.nvim
-                 :ggandor/leap.nvim])
+                 :kassio/neoterm])
 
 (setup-plugins :nvim-tree :nvim-autopairs :staline :nvim-treesitter.configs
                :zen-mode :colorizer :Comment :lsp_lines :leap :trouble
-               :telescope :fidget :toggleterm :todo-comments :which-key)
+               :telescope :fidget :todo-comments :which-key :cmp)
 
-(init-plugins :coq :leap :lspconfig :sexp)
+(init-plugins :leap :lspconfig :sexp :luasnip)

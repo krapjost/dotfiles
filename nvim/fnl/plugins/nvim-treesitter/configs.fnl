@@ -26,8 +26,8 @@
  :sync_install false
  :auto_install true
  :incremental_selection {:enable true
-                         :keymaps {:init_selection :<leader>s
-                                   :node_incremental :<leader>i
-                                   :node_decremental :<leader>d}}
+                         :keymaps {:init_selection :vs
+                                   :node_incremental :s
+                                   :node_decremental :u}}
  :highlight {:enable true :additional_vim_regex_highlighting [:clojure]}
  :rainbow {:enable true :extended_mode true}}

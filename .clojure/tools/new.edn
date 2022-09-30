@@ -1,0 +1,5 @@
+{:lib io.github.seancorfield/deps-new,
+ :coord
+ {:git/tag "v0.4.13",
+  :git/sha "879c4eb50df92fcd8c11423c2081e00998d7b613",
+  :git/url "https://github.com/seancorfield/deps-new.git"}}

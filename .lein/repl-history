@@ -1,0 +1,469 @@
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+exit
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+  (get-opts test-args)
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+  (get-opts test-args)
+(def test-args {:template-path "resources/org/substantial/new/"})
+  (get-opts test-args)
+  (:require
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(ns substantial.core
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :refer [ends-with?]]
+   [substantial.notes :refer [get-notes]]
+   [substantial.metadata :refer [get-meta-dictionary reset-meta-dictionary]]
+   [substantial.utilities :refer [create-config  get-config write-file]]
+   [substantial.pages :refer [create-index-page create-note-page]]))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+(defn html-file?
+  [file]
+  (ends-with? (.getName file) ".html"))
+(defn count-pages
+  [static-path]
+  (count (filter html-file? (file-seq (io/file static-path)))))
+;; TODO: find idiomatic way to merge default opts
+(defn build
+  "Builds html pagse from markdown content
+   Requires a site config.edn. Create a site config.edn with `create`.
+   - `(build)` with no args is for template project.
+   - `(build args)` with args is for template development."
+  ([] (build {:template-path ""}))
+  ([args]
+   (println "Building site.")
+   (get-meta-dictionary (:content-path (get-opts args)))
+   (let [opts (get-opts args)
+         config (get-config)
+         index (create-index-page config)
+         notes (get-notes (:content-path opts))
+         note-pages (create-note-pages config notes)]
+     (write-file (str (:static-path opts) "index.html") index)
+     (write-pages (:static-path opts) note-pages)
+     (println (str "Built " (count-pages (:static-path opts)) " pages."))
+     (reset-meta-dictionary))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(def test-args {:template-path "resources/org/substantial/new/"})
+(comment
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (create test-args)
+  (build)
+  (build test-args))
+  (create test-args)
+  (create)
+exit
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(defn create-config
+  "path includes `/`"
+  [path]
+  (spit (str path "config.edn") default-config))
+(def default-config
+  {:title "my title"
+   :author "my author"
+   :description "my description"
+   :site-url "https://notes.myname.com"})
+  (create test-args)
+(def test-args {:template-path "resources/org/substantial/new/"})
+  (create test-args)
+  (create)
+  (get-opts {})
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+  (get-opts test-args)
+  (create)
+  (doall (map (fn [[page-name content]]
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+(defn html-file?
+  [file]
+  (ends-with? (.getName file) ".html"))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(ns substantial.core
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :refer [ends-with?]]
+   [substantial.notes :refer [get-notes]]
+   [substantial.metadata :refer [get-meta-dictionary reset-meta-dictionary]]
+   [substantial.utilities :refer [create-config  get-config write-file]]
+   [substantial.pages :refer [create-index-page create-note-page]]))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+(defn html-file?
+  [file]
+  (ends-with? (.getName file) ".html"))
+(defn count-pages
+  [static-path]
+  (count (filter html-file? (file-seq (io/file static-path)))))
+;; TODO: find idiomatic way to merge default opts
+(defn build
+  "Builds html pagse from markdown content
+   Requires a site config.edn. Create a site config.edn with `create`.
+   - `(build)` with no args is for template project.
+   - `(build args)` with args is for template development."
+  ([] (build {:template-path ""}))
+  ([args]
+   (println "Building site.")
+   (get-meta-dictionary (:content-path (get-opts args)))
+   (let [opts (get-opts args)
+         config (get-config)
+         index (create-index-page config)
+         notes (get-notes (:content-path opts))
+         note-pages (create-note-pages config notes)]
+     (write-file (str (:static-path opts) "index.html") index)
+     (write-pages (:static-path opts) note-pages)
+     (println (str "Built " (count-pages (:static-path opts)) " pages."))
+     (reset-meta-dictionary))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(def test-args {:template-path "resources/org/substantial/new/"})
+(comment
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (create test-args)
+  (build)
+  (build test-args))
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (create test-args)
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+exit
+  [path pages]
+exit
+  (keyword (first args)))
+    [page-name (create-note-page config note)]))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn count-pages
+  [static-path]
+  (count (filter html-file? (file-seq (io/file static-path)))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(ns substantial.core
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :refer [ends-with?]]
+   [substantial.notes :refer [get-notes]]
+   [substantial.metadata :refer [get-meta-dictionary reset-meta-dictionary]]
+   [substantial.utilities :refer [create-config  get-config write-file]]
+   [substantial.pages :refer [create-index-page create-note-page]]))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+(defn html-file?
+  [file]
+  (ends-with? (.getName file) ".html"))
+(defn count-pages
+  [static-path]
+  (count (filter html-file? (file-seq (io/file static-path)))))
+;; TODO: find idiomatic way to merge default opts
+(defn build
+  "Builds html pagse from markdown content
+   Requires a site config.edn. Create a site config.edn with `create`.
+   - `(build)` with no args is for template project.
+   - `(build args)` with args is for template development."
+  ([] (build {:template-path ""}))
+  ([args]
+   (println "Building site.")
+   (get-meta-dictionary (:content-path (get-opts args)))
+   (let [opts (get-opts args)
+         config (get-config)
+         index (create-index-page config)
+         notes (get-notes (:content-path opts))
+         note-pages (create-note-pages config notes)]
+     (write-file (str (:static-path opts) "index.html") index)
+     (write-pages (:static-path opts) note-pages)
+     (println (str "Built " (count-pages (:static-path opts)) " pages."))
+     (reset-meta-dictionary))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(def test-args {:template-path "resources/org/substantial/new/"})
+(comment
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (create test-args)
+  (build)
+  (build test-args))
+(ns substantial.core
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :refer [ends-with?]]
+   [substantial.notes :refer [get-notes]]
+   [substantial.metadata :refer [get-meta-dictionary reset-meta-dictionary]]
+   [substantial.utilities :refer [create-config  get-config write-file]]
+   [substantial.pages :refer [create-index-page create-note-page]]))
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))
+(defn parse-args
+  [args]
+  (keyword (first args)))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+(defn html-file?
+  [file]
+  (ends-with? (.getName file) ".html"))
+(defn count-pages
+  [static-path]
+  (count (filter html-file? (file-seq (io/file static-path)))))
+;; TODO: find idiomatic way to merge default opts
+(defn build
+  "Builds html pagse from markdown content
+   Requires a site config.edn. Create a site config.edn with `create`.
+   - `(build)` with no args is for template project.
+   - `(build args)` with args is for template development."
+  ([] (build {:template-path ""}))
+  ([args]
+   (println "Building site.")
+   (get-meta-dictionary (:content-path (get-opts args)))
+   (let [opts (get-opts args)
+         config (get-config)
+         index (create-index-page config)
+         notes (get-notes (:content-path opts))
+         note-pages (create-note-pages config notes)]
+     (write-file (str (:static-path opts) "index.html") index)
+     (write-pages (:static-path opts) note-pages)
+     (println (str "Built " (count-pages (:static-path opts)) " pages."))
+     (reset-meta-dictionary))))
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(def test-args {:template-path "resources/org/substantial/new/"})
+(comment
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (create test-args)
+  (build)
+  (build test-args))
+  (get-opts {})
+  (get-opts test-args)
+  (create)
+  (get-opts test-args)
+  (build)
+(defn create-note-pages
+  "Create note pages with `notes` and `<template>-page`."
+  [config notes]
+  (for [[page-name note] notes]
+    [page-name (create-note-page config note)]))
+(defn get-opts
+  "Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+  [{:keys [template-path]}]
+  {:root-path (str template-path (if (empty? template-path) "" "root/"))
+   :content-path (str template-path "content/")
+   :static-path (str template-path "static/")})
+"Gets map of option paths to resources
+   template-path must includes `/` e.g. `resources/org/substantial/new/`"
+(defn create
+  "Creates site config using `template-path` from args
+   or at project root if called with no args.
+   `template-path` must include a `/`."
+  ([] (create {:template-path ""}))
+  ([args]
+   (println "Creating site config.")
+   (create-config (:root-path (get-opts args)))))
+(defn write-pages
+  "Write `pages` to files with."
+  [path pages]
+  (doall (map (fn [[page-name content]]
+                (spit (str path (name page-name) ".html") content))
+              pages)))

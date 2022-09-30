@@ -1,4 +1,4 @@
--- :fennel:1664278328
+-- :fennel:1664386588
 local opt = vim.opt
 opt.laststatus = 3
 opt.autoread = true
@@ -16,10 +16,15 @@ opt.timeoutlen = 100
 opt.cmdheight = 0
 opt.smartindent = true
 opt.expandtab = true
-opt.linebreak = true
+opt.wrap = false
+opt.sidescroll = 10
 opt.clipboard = "unnamedplus"
 opt.list = true
 opt.mouse = "a"
 opt.updatetime = 50
 opt.autoread = true
+vim.g.neoterm_default_mod = "botright"
+vim.g.neoterm_autoscroll = 1
+vim.g.neoterm_size = 13
+opt.completeopt = "menu,menuone,noselect"
 return nil

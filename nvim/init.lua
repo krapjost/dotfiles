@@ -1,9 +1,10 @@
 local nvim_dir = vim.fn.stdpath [[config]]
 local data_dir = vim.fn.stdpath [[data]]
+local start_dir = "/site/pack/paqs/start/"
 
 local function bootstrap(url)
   local name = url:gsub(".*/", "")
-  local path = data_dir .. "/site/pack/paqs/start/" .. name
+  local path = data_dir .. start_dir .. name
 
   if vim.fn.isdirectory(path) == 0 then
     print(name .. ": installing in data dir...")

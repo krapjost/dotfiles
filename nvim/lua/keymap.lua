@@ -1,7 +1,6 @@
--- :fennel:1664278499
+-- :fennel:1664544338
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
-local todo = require("todo-comments")
 local _local_2_ = require("which-key")
 local register = _local_2_["register"]
 vim.g.mapleader = " "
@@ -11,29 +10,57 @@ map("<C-h>", "<C-w>h", "Move left")
 map("<C-j>", "<C-w>j", "Move down")
 map("<C-k>", "<C-w>k", "Move up")
 map("<C-l>", "<C-w>l", "Move right")
-map("<esc>", "<C-\\><C-n>", "Exit term-mode", nil, "t")
+map("<esc>", "<C-\\><C-n>:Ttoggle<CR>", "Exit term-mode", nil, "t")
 map("<C-h>", "<C-\\><C-n>:wincmd h<CR>", "Move left", nil, "t")
 map("<C-j>", "<C-\\><C-n>:wincmd j<CR>", "Move down", nil, "t")
 map("<C-k>", "<C-\\><C-n>:wincmd k<CR>", "Move up", nil, "t")
 map("<C-l>", "<C-\\><C-n>:wincmd l<CR>", "Move right", nil, "t")
-map("<C-f>f", ":<C-r><C-w>", "yank word under cursor into cmd")
+map("<C-y>", ":<C-r><C-w>", "yank word under cursor into cmd")
+map("<C-c>", ":Tclear<CR>", "Clear Term")
+map("<C-s>", ":TREPLSendLine<CR>", "Line REPL")
+map("<C-f>", ":TREPLSendFile<CR>", "File REPL")
+map(":<CR>", ":noh<CR>", "No highlight")
 local function map_jump(leader)
-  return register({j = {name = "+Jump", ["="] = {todo.jump_next, "Todo next"}, ["-"] = {todo.jump_prev, "Todo prev"}, ["]"] = {vim.diagnostic.goto_next, "Diagnostic Next"}, ["["] = {vim.diagnostic.goto_prev, "Diagnostic Prev"}}}, {prefix = leader})
+  local todo = require("todo-comments")
+  if (leader == "[") then
+    return register({o = {todo.jump_prev, "Todo prev"}, ["\\"] = {vim.diagnostic.goto_prev, "Diagnostic Prev"}}, {prefix = leader})
+  else
+    return register({o = {todo.jump_next, "Todo next"}, ["\\"] = {vim.diagnostic.goto_next, "Diagnostic Next"}}, {prefix = leader})
+  end
+end
+local function cmd_o_num(cmd)
+  return tonumber(vim.api.nvim_exec(("echo " .. cmd), true))
+end
+local function toggle_term(mode, size)
+  return vim.cmd((mode .. " Ttoggle resize=" .. size))
+end
+local function toggle_on_winwidth()
+  if (cmd_o_num("winwidth('.')") > 100) then
+    return toggle_term("botright vertical", 50)
+  else
+    return toggle_term("botright", 10)
+  end
 end
 local function map_toggle(leader)
-  return register({t = {name = "+Toggle", t = {":ToggleTerm<CR>", "Terminal"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}}, {prefix = leader})
+  return register({t = {toggle_on_winwidth, "Terminal"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}, {prefix = leader})
 end
 local function map_find(leader)
-  return register({f = {name = "+Find", t = {":TodoTelescope<CR>", "Todos"}, f = {":Telescope find_files<CR>", "Files"}, g = {":Telescope live_grep<CR>", "Live grep"}, b = {":Telescope buffers<CR>", "Buffers"}, m = {":Telescope man_pages<CR>", "Man"}, c = {":Telescope colorscheme<CR>", "Colorscheme"}, k = {":Telescope keymaps<CR>", "Keymaps"}}}, {prefix = leader})
+  local project_cmd = ":lua require'telescope'.extensions.project.project{ display_type = 'full' }<CR>"
+  return register({p = {project_cmd, "Project"}, o = {":TodoTelescope<CR>", "Todos"}, f = {":Telescope find_files<CR>", "Files"}, g = {":Telescope live_grep<CR>", "Live grep"}, b = {":Telescope buffers<CR>", "Buffers"}, m = {":Telescope man_pages<CR>", "Man"}, c = {":Telescope colorscheme<CR>", "Colorscheme"}, k = {":Telescope keymaps<CR>", "Keymaps"}}, {prefix = leader})
 end
 local function map_buffer(leader)
-  return register({b = {name = "+Buffer", c = {":BufferClose<CR>", "Close current"}, w = {":BufferCloseAllButCurrentOrPinned<CR>", "Close all but"}, p = {":BufferPrevious<CR>", "Goto prev"}, n = {":BufferNext<CR>", "Goto next"}, ["1"] = {":BufferGoto 1<CR>", "Goto 1st"}, ["2"] = {":BufferGoto 2<CR>", "Goto 2nd"}, ["3"] = {":BufferGoto 3<CR>", "Goto 3rd"}, P = {":BufferPin<CR>", "Pin"}, b = {":BufferPick<CR>", "Pick"}, o = {name = "+Order", n = {":BufferOrderByBufferNumber<CR>", "By number"}, d = {":BufferOrderByDirectory<CR>", "By directory"}}}}, {prefix = leader})
+  return register({[leader] = {name = "+Buffer", c = {":BufferClose<CR>", "Close current"}, [leader] = {":BufferCloseAllButCurrentOrPinned<CR>", "Close all but"}, k = {":BufferPrevious<CR>", "Goto prev"}, j = {":BufferNext<CR>", "Goto next"}, ["1"] = {":BufferGoto 1<CR>", "Goto 1st"}, ["2"] = {":BufferGoto 2<CR>", "Goto 2nd"}, ["3"] = {":BufferGoto 3<CR>", "Goto 3rd"}, p = {":BufferPin<CR>", "Pin"}}, p = {":BufferPick<CR>", "Pick buffer"}, o = {name = "+Order", n = {":BufferOrderByBufferNumber<CR>", "By number"}, d = {":BufferOrderByDirectory<CR>", "By directory"}}}, {prefix = leader})
+end
+local function map_repl(leader)
+  return register({S = {":TREPLSendSelection<CR>", "Send selection"}}, {mode = "v"})
 end
 local function map_defaults()
-  map_toggle(" ")
-  map_buffer(" ")
-  map_find(" ")
-  return map_jump(" ")
+  map_toggle("t")
+  map_find("f")
+  map_repl(" ")
+  map_jump("]")
+  map_jump("[")
+  return map_buffer(" ")
 end
 map_defaults()
 local function map_for_language(name, leader, bufnr)
@@ -52,8 +79,7 @@ local function map_when_lsp(capa, leader, bufnr)
   else
   end
   if capa.definitionProvider then
-    mappings[leader]["h"] = {":Lspsaga lsp_finder<CR>", "Finder"}
-    mappings[leader]["d"] = {":Lspsaga peek_definition<CR>", "Definition"}
+    mappings[leader]["d"] = {b.definition, "Definition"}
   else
   end
   if capa.implementationProvider then
@@ -69,7 +95,7 @@ local function map_when_lsp(capa, leader, bufnr)
   else
   end
   if capa.renameProvider then
-    mappings[leader]["n"] = {":Lspsaga rename<CR>", "Rename"}
+    mappings[leader]["n"] = {b.rename, "Rename"}
   else
   end
   if capa.documentFormattingProvider then
@@ -77,7 +103,7 @@ local function map_when_lsp(capa, leader, bufnr)
   else
   end
   if capa.codeActionProvider then
-    mappings[leader]["c"] = {":Lspsaga code_action<CR>", "Code action"}
+    mappings[leader]["a"] = {b.code_action, "Code action"}
   else
   end
   if capa.signatureHelpProvider then
@@ -85,11 +111,11 @@ local function map_when_lsp(capa, leader, bufnr)
   else
   end
   if capa.hoverProvider then
-    mappings[leader]["K"] = {":Lspsaga hover_doc<CR>", "Hover"}
+    mappings[leader][";"] = {b.hover, "Hover"}
   else
   end
   if capa.documentSymbolProvider then
-    mappings[leader]["o"] = {":LSoutlineToggle<CR>", "Toggle outline"}
+    mappings[leader]["o"] = {b.document_symbol, "Doc symbols"}
   else
   end
   return register(mappings, opts)

@@ -1,4 +1,4 @@
--- :fennel:1664263818
+-- :fennel:1664397260
 local function safe_setup(plugin, _3fconfig)
   _G.assert((nil ~= plugin), "Missing argument plugin on utils.fnl:1")
   if (plugin ~= nil) then
