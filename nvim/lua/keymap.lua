@@ -1,4 +1,4 @@
--- :fennel:1664605475
+-- :fennel:1664610082
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local _local_2_ = require("which-key")
@@ -54,13 +54,17 @@ end
 local function map_repl(leader)
   return register({S = {":TREPLSendSelection<CR>", "Send selection"}}, {mode = "v"})
 end
+local function map_neogit(leader)
+  return register({[leader] = {":Neogit<CR>", "Open Neogit"}}, {prefix = leader})
+end
 local function map_defaults()
   map_toggle("t")
   map_find("f")
   map_repl(" ")
   map_jump("]")
   map_jump("[")
-  return map_buffer(" ")
+  map_buffer(" ")
+  return map_neogit("\\")
 end
 map_defaults()
 local function map_for_language(name, leader, bufnr)

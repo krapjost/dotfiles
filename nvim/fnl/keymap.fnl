@@ -20,6 +20,7 @@
 (map ":<CR>" ":noh<CR>" "No highlight")
 
 (fn map-jump [leader]
+  ;; TODO: add gitsigns jump here
   (let [todo (require :todo-comments)]
     (if (= leader "[")
         (register {:o [todo.jump_prev "Todo prev"]
@@ -77,13 +78,17 @@
 (fn map-repl [leader]
   (register {:S [":TREPLSendSelection<CR>" "Send selection"]} {:mode :v}))
 
+(fn map-neogit [leader]
+  (register {leader [":Neogit<CR>" "Open Neogit"]} {:prefix leader}))
+
 (fn map-defaults []
   (map-toggle :t)
   (map-find :f)
   (map-repl " ")
   (map-jump "]")
   (map-jump "[")
-  (map-buffer " "))
+  (map-buffer " ")
+  (map-neogit "\\"))
 
 (map-defaults)
 
@@ -94,7 +99,7 @@
                    :c [":RescriptClean<CR>" :Clean]}}
               {:prefix leader :buffer bufnr})))
 
-;;     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+;; TODO: map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 (fn map-for-git [leader bufnr]
   (local gs (require :gitsigns))
   (register {:h {:name :GitSigns
