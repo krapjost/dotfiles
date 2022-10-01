@@ -1,7 +1,9 @@
+(local lspconfig (require :lspconfig))
+
 :return
 
-(fn []
-  (vim.api.nvim_create_autocmd :BufWritePost
-                               {:pattern :*.fnl
-                                :command "silent! !fnlfmt --fix %:p"})
-  (vim.cmd "ia lam λ"))
+{:default_config {:cmd [:/home/krap/project/fennel/fennel-ls/fennel-ls]
+                  :filetypes [:fennel]
+                  :root_dir (fn [dir]
+                              (lspconfig.util.find_git_ancestor dir))
+                  :settings []}}

@@ -94,10 +94,16 @@
                    :c [":RescriptClean<CR>" :Clean]}}
               {:prefix leader :buffer bufnr})))
 
+;;     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 (fn map-for-git [leader bufnr]
   (local gs (require :gitsigns))
-  (register {:s {:name :+GitSigns
-                 :S [gs.stage_buffer :Stage]
+  (register {:h {:name :GitSigns
+                 :h [":Gitsigns stage_hunk<CR>" :Stage-hunk]
+                 :r [":Gitsigns reset_hunk<CR>" :Reset-hunk]}}
+            {:prefix leader :buffer bufnr :mode :v})
+  (register {:h {:name :+GitSigns
+                 :h [":Gitsigns select_hunk<CR>" :Select-hunk]
+                 :S [gs.stage_buffer :Stage-buffer]
                  :u [gs.undo_stage_hunk :Undo]
                  :R [gs.reset_buffer :Reset]
                  :p [gs.preview_hunk :Preview]

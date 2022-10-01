@@ -1,4 +1,4 @@
--- :fennel:1664544338
+-- :fennel:1664605475
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local _local_2_ = require("which-key")
@@ -70,6 +70,17 @@ local function map_for_language(name, leader, bufnr)
     return nil
   end
 end
+local function map_for_git(leader, bufnr)
+  local gs = require("gitsigns")
+  register({h = {name = "GitSigns", h = {":Gitsigns stage_hunk<CR>", "Stage-hunk"}, r = {":Gitsigns reset_hunk<CR>", "Reset-hunk"}}}, {prefix = leader, buffer = bufnr, mode = "v"})
+  local function _6_()
+    return gs.blame_line({full = true})
+  end
+  local function _7_()
+    return gs.diffthis("~")
+  end
+  return register({h = {name = "+GitSigns", h = {":Gitsigns select_hunk<CR>", "Select-hunk"}, S = {gs.stage_buffer, "Stage-buffer"}, u = {gs.undo_stage_hunk, "Undo"}, R = {gs.reset_buffer, "Reset"}, p = {gs.preview_hunk, "Preview"}, B = {_6_, "Blame"}, b = {gs.toggle_current_line_blame, "Toggle-blame"}, d = {gs.diffthis, "Diffthis"}, D = {_7_, "Diffthis-what"}, t = {gs.toggle_deleted, "Toggle-deleted"}}}, {prefix = leader, buffer = bufnr})
+end
 local function map_when_lsp(capa, leader, bufnr)
   local mappings = {[leader] = {}}
   local opts = {buffer = bufnr}
@@ -120,4 +131,4 @@ local function map_when_lsp(capa, leader, bufnr)
   end
   return register(mappings, opts)
 end
-return {["map-when-lsp"] = map_when_lsp, ["map-for-language"] = map_for_language}
+return {["map-when-lsp"] = map_when_lsp, ["map-for-language"] = map_for_language, ["map-for-git"] = map_for_git}

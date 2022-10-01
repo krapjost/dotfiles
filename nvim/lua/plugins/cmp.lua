@@ -1,4 +1,4 @@
--- :fennel:1664563079
+-- :fennel:1664564117
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 vim.opt.completeopt = {"menu", "menuone", "noselect"}

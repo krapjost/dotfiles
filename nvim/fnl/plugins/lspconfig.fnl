@@ -1,7 +1,8 @@
 (vim.diagnostic.config {:signs true :virtual_text false :virtual_lines false})
 (local lspconfig (require :lspconfig))
+(local lconfigs (require :lspconfig.configs))
 (local cmp-lsp (require :cmp_nvim_lsp))
-(local servers [:sumneko_lua :clojure_lsp :dartls :rescriptls :ltex])
+(local servers [:sumneko_lua :fennel-ls :clojure_lsp :dartls :rescriptls :ltex])
 
 (set vim.lsp.handlers.textDocument/signatureHelp
      (vim.lsp.with vim.lsp.handlers.signature_help {:border :solid}))
@@ -20,7 +21,6 @@
 (fn setup-lsp [client bufnr]
   (attach-navic client bufnr)
   (let [{:server_capabilities capa : name} client
-        navic (require :nvim-navic)
         {: map-for-language : map-when-lsp} (require :keymap)
         {: au-when-lsp} (require :autocmd)]
     (when (= name :fennel-ls)

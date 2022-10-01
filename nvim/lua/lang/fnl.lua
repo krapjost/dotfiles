@@ -1,6 +1,6 @@
--- :fennel:1664290550
-local function _1_()
-  vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*.fnl", command = "silent! !fnlfmt --fix %:p"})
-  return vim.cmd("ia lam \206\187")
+-- :fennel:1664600327
+local lspconfig = require("lspconfig")
+local function _1_(dir)
+  return lspconfig.util.find_git_ancestor(dir)
 end
-return _1_
+return {default_config = {cmd = {"/home/krap/project/fennel/fennel-ls/fennel-ls"}, filetypes = {"fennel"}, root_dir = _1_, settings = {}}}

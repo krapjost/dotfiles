@@ -7,6 +7,7 @@
                  :kyazdani42/nvim-web-devicons
                  :j-hui/fidget.nvim
                  :neovim/nvim-lspconfig
+                 ;; :nvim-lua/lsp-status.nvim
                  :nvim-telescope/telescope.nvim
                  :nvim-telescope/telescope-project.nvim
                  :romgrk/barbar.nvim
@@ -45,8 +46,9 @@
                  :mcchrish/zenbones.nvim
                  :kassio/neoterm])
 
-(setup-plugins :nvim-tree :nvim-autopairs :staline :nvim-treesitter.configs
-               :zen-mode :colorizer :Comment :lsp_lines :leap :trouble
-               :telescope :fidget :todo-comments :which-key :cmp)
+(setup-plugins :which-key :nvim-tree :nvim-autopairs :staline
+               :nvim-treesitter.configs :zen-mode :colorizer :Comment :lsp_lines
+               :leap :trouble :telescope :fidget :todo-comments :gitsigns
+               :neogit :cmp)
 
 (init-plugins :leap :lspconfig :sexp :luasnip)
