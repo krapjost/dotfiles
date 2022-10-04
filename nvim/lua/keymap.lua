@@ -1,4 +1,4 @@
--- :fennel:1664863914
+-- :fennel:1664864777
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local _local_2_ = require("which-key")
@@ -52,8 +52,11 @@ end
 local function map_buffer(leader)
   return register({[leader] = {name = "+Buffer", c = {":BufferClose<CR>", "Close current"}, [leader] = {":BufferCloseAllButCurrentOrPinned<CR>", "Close all but"}, k = {":BufferPrevious<CR>", "Goto prev"}, j = {":BufferNext<CR>", "Goto next"}, ["1"] = {":BufferGoto 1<CR>", "Goto 1st"}, ["2"] = {":BufferGoto 2<CR>", "Goto 2nd"}, ["3"] = {":BufferGoto 3<CR>", "Goto 3rd"}, p = {":BufferPin<CR>", "Pin"}}, p = {":BufferPick<CR>", "Pick buffer"}, o = {name = "+Order", n = {":BufferOrderByBufferNumber<CR>", "By number"}, d = {":BufferOrderByDirectory<CR>", "By directory"}}}, {prefix = leader})
 end
-local function map_repl(leader)
+local function map_repl()
   return register({S = {":TREPLSendSelection<CR>", "Send selection"}}, {mode = "v"})
+end
+local function map_zenmode(leader)
+  return register({z = {":ZenMode<CR>", "Zenmode"}}, {prefix = leader})
 end
 local function map_neogit(leader)
   return register({[leader] = {":Neogit<CR>", "Open Neogit"}}, {prefix = leader})
@@ -61,7 +64,8 @@ end
 local function map_defaults()
   map_toggle("t")
   map_find("f")
-  map_repl(" ")
+  map_repl()
+  map_zenmode(" ")
   map_jump("]")
   map_jump("[")
   map_buffer(" ")

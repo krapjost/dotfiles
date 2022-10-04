@@ -20,7 +20,6 @@
 (map ":<CR>" ":noh<CR>" "No highlight")
 
 (fn map-jump [leader]
-  ;; TODO: add gitsigns jump here
   (let [gs (require :gitsigns)
         todo (require :todo-comments)]
     (if (= leader "[")
@@ -79,22 +78,25 @@
                  :d [":BufferOrderByDirectory<CR>" "By directory"]}}
             {:prefix leader}))
 
-;; TODO: add repl support for fennel
-(fn map-repl [leader]
+(fn map-repl []
   (register {:S [":TREPLSendSelection<CR>" "Send selection"]} {:mode :v}))
+
+(fn map-zenmode [leader]
+  (register {:z [":ZenMode<CR>" "Zenmode"]} {:prefix leader}))
 
 (fn map-neogit [leader]
   (register {leader [":Neogit<CR>" "Open Neogit"]} {:prefix leader}))
 
 (fn map-defaults []
-  (map-toggle :t)
-  (map-find :f)
-  (map-repl " ")
-  (map-jump "]")
-  (map-jump "[")
-  (map-buffer " ")
-  (map-neogit "\\"))
-
+ (map-toggle :t)
+ (map-find :f)
+ (map-repl)
+ (map-zenmode " ")
+ (map-jump "]")
+ (map-jump "[")
+ (map-buffer " ")
+ (map-neogit "\\"))
+  
 (map-defaults)
 
 (fn map-for-language [name leader bufnr]

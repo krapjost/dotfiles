@@ -13,6 +13,7 @@
                  :SmiteshP/nvim-navic
                  :tamton-aquib/staline.nvim
                  :folke/zen-mode.nvim
+                 :folke/twilight.nvim
                  :folke/which-key.nvim
                  :folke/trouble.nvim
                  :folke/todo-comments.nvim
