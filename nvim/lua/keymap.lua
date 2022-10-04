@@ -1,4 +1,4 @@
--- :fennel:1664610082
+-- :fennel:1664863914
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local _local_2_ = require("which-key")
@@ -21,11 +21,12 @@ map("<C-s>", ":TREPLSendLine<CR>", "Line REPL")
 map("<C-f>", ":TREPLSendFile<CR>", "File REPL")
 map(":<CR>", ":noh<CR>", "No highlight")
 local function map_jump(leader)
+  local gs = require("gitsigns")
   local todo = require("todo-comments")
   if (leader == "[") then
-    return register({o = {todo.jump_prev, "Todo prev"}, ["\\"] = {vim.diagnostic.goto_prev, "Diagnostic Prev"}}, {prefix = leader})
+    return register({g = {gs.prev_hunk, "Gitsign prev"}, o = {todo.jump_prev, "Todo prev"}, ["\\"] = {vim.diagnostic.goto_prev, "Diagnostic Prev"}}, {prefix = leader})
   else
-    return register({o = {todo.jump_next, "Todo next"}, ["\\"] = {vim.diagnostic.goto_next, "Diagnostic Next"}}, {prefix = leader})
+    return register({g = {gs.next_hunk, "Gitsign next"}, o = {todo.jump_next, "Todo next"}, ["\\"] = {vim.diagnostic.goto_next, "Diagnostic Next"}}, {prefix = leader})
   end
 end
 local function cmd_o_num(cmd)
@@ -42,7 +43,7 @@ local function toggle_on_winwidth()
   end
 end
 local function map_toggle(leader)
-  return register({t = {toggle_on_winwidth, "Terminal"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}, {prefix = leader})
+  return register({t = {toggle_on_winwidth, "Terminal"}, d = {":TroubleToggle<CR>", "Trouble"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}, {prefix = leader})
 end
 local function map_find(leader)
   local project_cmd = ":lua require'telescope'.extensions.project.project{ display_type = 'full' }<CR>"

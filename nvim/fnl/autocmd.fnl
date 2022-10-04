@@ -15,10 +15,11 @@
                               :callback (or ?callback (au-callback langs))
                               :once true}))
 
-(set-lang-au [:fnl]
-             #(vim.api.nvim_create_autocmd :BufWritePost
-                                           {:pattern :*.fnl
-                                            :command "silent! !fnlfmt --fix %:p"}))
+;; FIX: fnlfmt deleting what is correct.
+;; (set-lang-au [:fnl]
+;;              #(vim.api.nvim_create_autocmd :BufWritePost
+;;                                            {:pattern :*.fnl
+;;                                             :command "!fnlfmt --fix %:p"}))
 
 (set-lang-au [:res] #(set vim.opt.omnifunc "rescript#Complete"))
 (set-lang-au [:cljd] #(vim.cmd "setfiletype clojure"))

@@ -1,6 +1,9 @@
 (local u (require :utils))
 (local telescope-layout (u.preq :telescope.actions.layout))
 (local telescope (u.preq :telescope))
+(local actions (require :telescope.actions))
+(local trouble (require :trouble.providers.telescope))
+
 (telescope.load_extension :project)
 
 :return
@@ -19,5 +22,7 @@
                             :height 0.8
                             :preview_cutoff 120}
             :preview {}
-            :mappings {:n {:<C-p> telescope-layout.toggle_preview}
-                       :i {:<C-p> telescope-layout.toggle_preview}}}}
+            :mappings {:i {:<c-t> trouble.open_with_trouble}
+                       :n {:<c-t> trouble.open_with_trouble}
+                       :i {:<c-p> telescope-layout.toggle_preview}
+                       :n {:<c-p> telescope-layout.toggle_preview}}}}

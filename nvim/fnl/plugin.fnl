@@ -7,7 +7,6 @@
                  :kyazdani42/nvim-web-devicons
                  :j-hui/fidget.nvim
                  :neovim/nvim-lspconfig
-                 ;; :nvim-lua/lsp-status.nvim
                  :nvim-telescope/telescope.nvim
                  :nvim-telescope/telescope-project.nvim
                  :romgrk/barbar.nvim
@@ -30,7 +29,6 @@
                  :p00f/nvim-ts-rainbow
                  :lewis6991/gitsigns.nvim
                  :timuntersberger/neogit
-                 {:url "https://git.sr.ht/~whynothugo/lsp_lines.nvim"}
                  {:url "https://git.sr.ht/~technomancy/fnlfmt"}
                  :norcalli/nvim-colorizer.lua
                  :L3MON4D3/LuaSnip
@@ -47,8 +45,7 @@
                  :kassio/neoterm])
 
 (setup-plugins :which-key :nvim-tree :nvim-autopairs :staline
-               :nvim-treesitter.configs :zen-mode :colorizer :Comment :lsp_lines
-               :leap :trouble :telescope :fidget :todo-comments :gitsigns
-               :neogit :cmp)
+               :nvim-treesitter.configs :zen-mode :colorizer :Comment :leap
+               :trouble :telescope :fidget :todo-comments :gitsigns :neogit :cmp)
 
 (init-plugins :leap :lspconfig :sexp :luasnip)

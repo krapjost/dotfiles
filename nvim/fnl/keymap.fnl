@@ -21,12 +21,15 @@
 
 (fn map-jump [leader]
   ;; TODO: add gitsigns jump here
-  (let [todo (require :todo-comments)]
+  (let [gs (require :gitsigns)
+        todo (require :todo-comments)]
     (if (= leader "[")
-        (register {:o [todo.jump_prev "Todo prev"]
+        (register {:g [gs.prev_hunk "Gitsign prev"]
+                   :o [todo.jump_prev "Todo prev"]
                    "\\" [vim.diagnostic.goto_prev "Diagnostic Prev"]}
                   {:prefix leader})
-        (register {:o [todo.jump_next "Todo next"]
+        (register {:g [gs.next_hunk "Gitsign next"]
+                   :o [todo.jump_next "Todo next"]
                    "\\" [vim.diagnostic.goto_next "Diagnostic Next"]}
                   {:prefix leader}))))
 
@@ -43,6 +46,7 @@
 
 (fn map-toggle [leader]
   (register {:t [toggle-on-winwidth :Terminal]
+             :d [":TroubleToggle<CR>" :Trouble]
              :n [":NvimTreeToggle<CR>" :Nerdtree]} {:prefix leader}))
 
 (fn map-find [leader]
@@ -75,6 +79,7 @@
                  :d [":BufferOrderByDirectory<CR>" "By directory"]}}
             {:prefix leader}))
 
+;; TODO: add repl support for fennel
 (fn map-repl [leader]
   (register {:S [":TREPLSendSelection<CR>" "Send selection"]} {:mode :v}))
 

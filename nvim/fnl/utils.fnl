@@ -1,5 +1,5 @@
 (λ safe-setup [plugin ?config]
-  "setup with config table located in plugins dir; if file is not exists, setup with empty table."
+  "setup with config in plugins dir; if file is not exists, setup with empty table."
   (if (not= plugin nil)
       (plugin.setup (or ?config {}))
       (vim.pretty_print (.. "Missing plugin is :: " plugin))))

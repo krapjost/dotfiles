@@ -1,4 +1,4 @@
-(vim.diagnostic.config {:signs true :virtual_text false :virtual_lines false})
+;; (vim.diagnostic.config {:signs true :virtual_text false :virtual_lines false})
 (local lspconfig (require :lspconfig))
 (local lconfigs (require :lspconfig.configs))
 (local cmp-lsp (require :cmp_nvim_lsp))

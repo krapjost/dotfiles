@@ -1,4 +1,4 @@
--- :fennel:1664602129
+-- :fennel:1664860127
 local au = vim.api.nvim_create_autocmd
 local function au_callback(langs)
   local function _1_()
@@ -28,18 +28,14 @@ local function set_lang_au(langs, _3fcallback)
   return au({"BufRead", "BufNewFile"}, {pattern = au_pattern(langs), callback = (_3fcallback or au_callback(langs)), once = true})
 end
 local function _3_()
-  return vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*.fnl", command = "silent! !fnlfmt --fix %:p"})
-end
-set_lang_au({"fnl"}, _3_)
-local function _4_()
   vim.opt.omnifunc = "rescript#Complete"
   return nil
 end
-set_lang_au({"res"}, _4_)
-local function _5_()
+set_lang_au({"res"}, _3_)
+local function _4_()
   return vim.cmd("setfiletype clojure")
 end
-set_lang_au({"cljd"}, _5_)
+set_lang_au({"cljd"}, _4_)
 local function au_when_lsp(capa, bufnr)
   if capa.documentFormattingProvider then
     return au("BufWritePre", {buffer = bufnr, desc = "format-on-save", command = "lua vim.lsp.buf.format()"})

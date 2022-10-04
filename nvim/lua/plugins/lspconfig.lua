@@ -1,5 +1,4 @@
--- :fennel:1664605532
-vim.diagnostic.config({signs = true, virtual_lines = false, virtual_text = false})
+-- :fennel:1664858552
 local lspconfig = require("lspconfig")
 local lconfigs = require("lspconfig.configs")
 local cmp_lsp = require("cmp_nvim_lsp")
