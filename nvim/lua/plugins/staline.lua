@@ -1,2 +1,0 @@
--- :fennel:1664607716
-return {sections = {left = {" ", "mode", " ", "branch", " ", "lsp_name"}, mid = {"lsp", "\194\175\\_(\227\131\132)_/\194\175"}, right = {"line_column"}}, defaults = {true_colors = true, branch_symbol = "\239\158\161 ", line_column = "%l:%c [%L]"}, mode_colors = {n = "#cdc5a4", i = "#97a693", ic = "#a69fb0", c = "#90896f", v = "#b0a386", V = "#b0a386"}, mode_icons = {n = "\240\159\164\167", i = "\240\159\164\162", ic = "\240\159\152\156", c = "\240\159\164\146", v = "\240\159\164\174", V = "\240\159\164\174"}}
