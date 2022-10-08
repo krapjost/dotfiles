@@ -1,0 +1,5 @@
+(require :option)
+(require :plugin)
+(require :keymap)
+(require :autocmd)
+(vim.cmd "colorscheme zenwritten")
