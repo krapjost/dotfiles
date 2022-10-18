@@ -1,8 +1,8 @@
--- :fennel:1664858552
+-- :fennel:1665535665
 local lspconfig = require("lspconfig")
 local lconfigs = require("lspconfig.configs")
 local cmp_lsp = require("cmp_nvim_lsp")
-local servers = {"sumneko_lua", "fennel-ls", "clojure_lsp", "dartls", "rescriptls", "ltex"}
+local servers = {"sumneko_lua", "fennel-ls", "clojure_lsp", "dartls", "rescriptls", "ltex", "cssls", "tsserver"}
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "solid"})
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "solid"})
 lconfigs["fennel-ls"] = require("lang.fnl")

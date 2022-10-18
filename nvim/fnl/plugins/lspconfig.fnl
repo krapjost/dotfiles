@@ -2,7 +2,7 @@
 (local lspconfig (require :lspconfig))
 (local lconfigs (require :lspconfig.configs))
 (local cmp-lsp (require :cmp_nvim_lsp))
-(local servers [:sumneko_lua :fennel-ls :clojure_lsp :dartls :rescriptls :ltex])
+(local servers [:sumneko_lua :fennel-ls :clojure_lsp :dartls :rescriptls :ltex :cssls :tsserver])
 
 (set vim.lsp.handlers.textDocument/signatureHelp
      (vim.lsp.with vim.lsp.handlers.signature_help {:border :solid}))

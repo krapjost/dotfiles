@@ -1,4 +1,4 @@
--- :fennel:1664860127
+-- :fennel:1665536438
 local au = vim.api.nvim_create_autocmd
 local function au_callback(langs)
   local function _1_()

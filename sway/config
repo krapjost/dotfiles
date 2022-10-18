@@ -18,7 +18,7 @@ set $mod Mod4
 set $ranger "sh /home/krap/dotfiles/sway/float.sh foot -e ranger"
 set $btm "sh /home/krap/dotfiles/sway/float.sh foot -e btm"
 set $recorder "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
-set $record_gif "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -g "$(slurp)" -F fps=30 -c gif -f ~/Videos/$(date +%y%m%d_%T).gif"
+set $record_gif "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -g "$(slurp)" -F fps=30 -f ~/Videos/$(date +%y%m%d_%T).mp4"
 set $showkey "wshowkeys -b '#e0d6cb' -f '#1f1c17' -s '#657662' -a top -F 'FiraCode Nerd Font Mono 24' -m 5"
 set $term footclient
 set $browser chromium

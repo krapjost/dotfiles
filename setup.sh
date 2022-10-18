@@ -7,3 +7,4 @@ ln -s $(pwd)/waybar ~/.config
 ln -s $(pwd)/rofi ~/.config
 ln -s $(pwd)/.zshrc ~
 ln -s $(pwd)/.clojure ~
+ln -s $(pwd)/.doom.d ~

@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -40,10 +40,79 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+(defun org-roam-hugo-template ()
+  (mapconcat #'identity
+             `("#+title: ${title}"
+               "#+hugo_base_dir: ~/blog"
+               "#+hugo_section: posts"
+               "#+hugo_publishdate: %T"
+               "#+hugo_front_matter_format: yaml"
+               "#+hugo_auto_set_lastmod: t"
+               "#+filetags: %?\n")
+             "\n"))
+
+
+(defun org-roam-hugo-template-ko ()
+  (mapconcat #'identity
+             `("#+title: ${title}"
+               "#+hugo_base_dir: ~/blog"
+               "#+hugo_section: ../content_ko/posts"
+               "#+hugo_publishdate: %T"
+               "#+hugo_front_matter_format: yaml"
+               "#+hugo_auto_set_lastmod: t"
+               "#+filetags: %?\n")
+             "\n"))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+(setq org-roam-directory (file-truename "~/org/roam"))
+(setq org-roam-completion-everywhere t)
+(setq find-file-visit-truename t)
+(org-roam-db-autosync-mode)
+(setq org-roam-capture-templates
+      '(("e" "En Posts" plain
+         (function org-roam-hugo-template)
+         :target (file "%<%y%m%d%H%M%S>-${slug}-en.org")
+         :unarrowed t)
+        ("k" "Ko Posts" plain
+         (function org-roam-hugo-template-ko)
+         :target (file "%<%y%m%d%H%M%S>-${slug}-ko.org")
+         :unarrowed t)))
 
+
+(with-eval-after-load 'org-capture
+  (defun org-hugo-new-subtree-post-capture-template ()
+    "Returns `org-capture' template string for new Hugo post.
+   See `org-capture-templates' for more information."
+    (let* ((date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
+           (title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(,(concat "* TODO " title)
+                   ":PROPERTIES:"
+                    ,(concat ":EXPORT_FILE_NAME: " fname)
+                     ,(concat ":EXPORT_DATE: " date)
+                     ":END:"
+                     "%?\n")
+                  "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("e"                ;`org-capture' binding + e
+                 "English posts"
+                 entry
+                 ;; It is assumed that below file is present in `org-directory'
+                 ;; and that it has a "Blog Ideas" heading. It can even be a
+                 ;; symlink pointing to the actual location of all-posts.org!
+                 (file+olp "en-posts.org" "Posts")
+                 (function org-hugo-new-subtree-post-capture-template)))
+
+  (add-to-list 'org-capture-templates
+               '("k"                ;`org-capture' binding + k
+                 "Korean posts"
+                 entry
+                 (file+olp "ko-posts.org" "Posts")
+                 (function org-hugo-new-subtree-post-capture-template))))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -76,3 +145,11 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(map! :leader :desc "Capture Roam" :n "R" #'org-roam-capture)
+
+(after! 'org
+  (add-to-list 'org-latex-packages-alist
+               '("AUTO" "babel" t ("pdflatex")))
+  (add-to-list 'org-latex-packages-alist
+               '("AUTO" "polyglossia" t ("xelatex" "lualatex"))))
