@@ -3,12 +3,10 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "krapjost"
       user-mail-address "krapjost@gmail.com")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -34,11 +32,13 @@
 ;; `load-theme' function. This is the default:
 ;;
 
-(setq doom-theme 'doom-sourcerer)
+;; (setq doom-theme 'doom-flatwhite)
+(setq doom-theme 'doom-badger)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
+
 
 (defun org-roam-hugo-template ()
   (mapconcat #'identity
@@ -147,9 +147,22 @@
 ;; they are implemented.
 
 (map! :leader :desc "Capture Roam" :n "R" #'org-roam-capture)
+(map! :leader :desc "Wakatime" :n "W" #'wakatime-mode)
 
-(after! 'org
-  (add-to-list 'org-latex-packages-alist
-               '("AUTO" "babel" t ("pdflatex")))
-  (add-to-list 'org-latex-packages-alist
-               '("AUTO" "polyglossia" t ("xelatex" "lualatex"))))
+(after! lispy
+  (setq lispy-compat "cider"))
+
+(after! eww
+  (setq browse-url-browser-function 'eww-browse-url))
+
+(after! wakatime-mode
+  (setq wakatime-cli-path "/usr/bin/wakatime-cli")
+  (global-wakatime-mode))
+
+(after! cider
+  (set-popup-rules!
+   '(("^\\*cider-repl"
+      :side right
+      :width 80
+      :quit nil
+      :ttl nil))))
