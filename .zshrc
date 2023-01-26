@@ -1,6 +1,6 @@
 ZSH=/usr/share/oh-my-zsh/
-ZSH_THEME="norm"
-# ZSH_THEME="zhann"
+# ZSH_THEME="norm"
+ZSH_THEME="lambda"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
 
@@ -17,7 +17,7 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
-export PATH=$PATH:$HOME/.emacs.d/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools:$HOME/flutter/bin:/usr/lib/jvm/java-17-openjdk/bin:~/.wakatime
+export PATH=$PATH:$HOME/.emacs.d/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/share/solana/install/active_release/bin:$HOME/.cargo/bin:$HOME/jost/android-studio/bin:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:~/.pub-cache/bin:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools:$HOME/flutter/bin:/usr/lib/jvm/java-17-openjdk/bin
 export ANDROID_NDK_HOME=~/Android/Sdk/ndk
 export NDK_HOME=~/Android/Sdk/ndk
 export ANDROID_SDK_ROOT=~/Android/Sdk

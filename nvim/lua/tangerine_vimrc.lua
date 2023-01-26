@@ -1,6 +1,5 @@
--- :fennel:1664277053
+-- :fennel:1674710327
 require("option")
 require("plugin")
 require("keymap")
-require("autocmd")
-return vim.cmd("colorscheme zenwritten")
+return require("autocmd")

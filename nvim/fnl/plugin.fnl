@@ -1,34 +1,36 @@
 (local {: setup-plugins : init-plugins} (require :utils))
 
 ((require :paq) [:savq/paq-nvim.git
-                 :udayvir-singh/tangerine.nvim
+                 :udayvir-singh/tangerine.nvim 
+                 :savq/melange-nvim
+                 :hachy/eva01.vim
+                 :olivercederborg/poimandres.nvim
+                 :frenzyexists/aquarium-vim
                  :nvim-lua/plenary.nvim
-                 :nvim-lua/popup.nvim
                  :kyazdani42/nvim-web-devicons
+                 :nvim-lua/popup.nvim
                  :j-hui/fidget.nvim
+                 :feline-nvim/feline.nvim
+                 :tamago324/lir.nvim
                  :neovim/nvim-lspconfig
                  :nvim-telescope/telescope.nvim
                  :nvim-telescope/telescope-project.nvim
-                 :romgrk/barbar.nvim
                  :SmiteshP/nvim-navic
-                 :tamton-aquib/staline.nvim
                  :folke/zen-mode.nvim
                  :folke/twilight.nvim
                  :folke/which-key.nvim
                  :folke/trouble.nvim
-                 :folke/todo-comments.nvim
-                 :kyazdani42/nvim-tree.lua
+                 :folke/todo-comments.nvim 
+                 :nvim-tree/nvim-tree.lua
                  :guns/vim-sexp
                  :tpope/vim-repeat
                  :tpope/vim-surround
                  :numToStr/Comment.nvim
                  :ggandor/leap.nvim
                  :windwp/nvim-autopairs
-                 [:eraserhd/parinfer-rust {:run "cargo build --release"}]
                  :nvim-treesitter/nvim-treesitter
                  :nvim-treesitter/nvim-treesitter-textobjects
                  :p00f/nvim-ts-rainbow
-                 :nvim-orgmode/orgmode
                  :lewis6991/gitsigns.nvim
                  :timuntersberger/neogit
                  {:url "https://git.sr.ht/~technomancy/fnlfmt"}
@@ -40,14 +42,10 @@
                  :hrsh7th/cmp-path
                  :hrsh7th/cmp-cmdline
                  :hrsh7th/nvim-cmp
-                 [:rescript-lang/vim-rescript {:opt true}]
-                 [:nkrkv/nvim-treesitter-rescript {:opt true}]
-                 :rktjmp/lush.nvim
-                 :mcchrish/zenbones.nvim
                  :kassio/neoterm])
 
-(setup-plugins :which-key :nvim-tree :nvim-autopairs :staline
+(setup-plugins :which-key :nvim-tree :nvim-autopairs 
                :nvim-treesitter.configs :zen-mode :colorizer :Comment :leap
-               :trouble :telescope :fidget :todo-comments :gitsigns :neogit :cmp :orgmode)
+               :trouble :telescope :fidget :todo-comments :gitsigns :neogit :cmp)
 
 (init-plugins :leap :lspconfig :sexp :luasnip)

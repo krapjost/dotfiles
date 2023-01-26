@@ -1,8 +1,8 @@
 (λ safe-setup [plugin ?config]
   "setup with config in plugins dir; if file is not exists, setup with empty table."
-  (if (not= plugin nil)
-      (plugin.setup (or ?config {}))
-      (vim.pretty_print (.. "Missing plugin is :: " plugin))))
+  (if (= plugin nil)
+      (vim.pretty_print (.. "Missing plugin is :: " plugin))
+      (plugin.setup (or ?config {}))))
 
 (fn preq [name]
   "safe require using pcall."
@@ -15,14 +15,15 @@
   (preq (.. :plugins. name)))
 
 (fn setup-plugins [...]
-  "init plugins which needs to setup."
+  "init plugins which needs setup."
   (each [_ name (ipairs [...])]
+    (vim.pretty_print (.. "init :: " name))
     (let [plugin (preq name)
           config (preq-conf name)]
       (safe-setup plugin config))))
 
 (fn init-plugins [...]
-  "init plugins which doesn't needs to setup."
+  "init plugins which doesn't needs setup."
   (each [_ name (ipairs [...])]
     (preq-conf name)))
 

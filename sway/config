@@ -15,12 +15,12 @@ input type:keyboard {
 ### Variables
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-set $ranger "sh /home/krap/dotfiles/sway/float.sh foot -e ranger"
-set $btm "sh /home/krap/dotfiles/sway/float.sh foot -e btm"
-set $recorder "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
-set $record_gif "sh /home/krap/dotfiles/sway/float.sh foot -e wf-recorder -g "$(slurp)" -F fps=30 -c gif -f ~/Videos/$(date +%y%m%d_%T).gif"
+set $ranger "sh /home/krap/dotfiles/sway/float.sh alacritty -e ranger"
+set $btm "sh /home/krap/dotfiles/sway/float.sh alacritty -e btm"
+set $recorder "sh /home/krap/dotfiles/sway/float.sh alacritty -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
+set $record_gif "sh /home/krap/dotfiles/sway/float.sh alacritty -e wf-recorder -g "$(slurp)" -F fps=30 -c gif -f ~/Videos/$(date +%y%m%d_%T).gif"
 set $showkey "wshowkeys -b '#e0d6cb' -f '#1f1c17' -s '#657662' -a top -F 'FiraCode Nerd Font Mono 24' -m 5"
-set $term footclient
+set $term wezterm
 set $browser chromium
 set $emacs "emacsclient -c"
 set $wallpaper "/home/krap/Pictures/wallpaper/002.jpg"
@@ -38,7 +38,6 @@ exec swayidle -w \
 ### Autostart
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec python /home/krap/dotfiles/sway/dim-sway.py
-exec foot --server
 exec mako
 exec persway -a -o 1
 exec --no-startup-id fcitx5 -d

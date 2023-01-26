@@ -1,4 +1,4 @@
--- :fennel:1665995431
+-- :fennel:1674700929
 local _local_1_ = require("utils")
 local map = _local_1_["map"]
 local _local_2_ = require("which-key")
@@ -19,7 +19,10 @@ map("<C-y>", ":<C-r><C-w>", "yank word under cursor into cmd")
 map("<C-c>", ":Tclear<CR>", "Clear Term")
 map("<C-s>", ":TREPLSendLine<CR>", "Line REPL")
 map("<C-f>", ":TREPLSendFile<CR>", "File REPL")
-map(":<CR>", ":noh<CR>", "No highlight")
+local function print_num(n)
+  return vim.cmd(("echo " .. n))
+end
+map("<F1>", print_num, "Hello")
 local function map_jump(leader)
   local gs = require("gitsigns")
   local todo = require("todo-comments")
@@ -43,7 +46,7 @@ local function toggle_on_winwidth()
   end
 end
 local function map_toggle(leader)
-  return register({t = {toggle_on_winwidth, "Terminal"}, d = {":TroubleToggle<CR>", "Trouble"}, n = {":NvimTreeToggle<CR>", "Nerdtree"}}, {prefix = leader})
+  return register({t = {toggle_on_winwidth, "Terminal"}, d = {":TroubleToggle<CR>", "Trouble"}, o = {":NvimTreeToggle<CR>", "Nerdtree"}}, {prefix = leader})
 end
 local function map_find(leader)
   local project_cmd = ":lua require'telescope'.extensions.project.project{ display_type = 'full' }<CR>"
@@ -51,9 +54,6 @@ local function map_find(leader)
 end
 local function map_buffer(leader)
   return register({[leader] = {name = "+Buffer", c = {":BufferClose<CR>", "Close current"}, [leader] = {":BufferCloseAllButCurrentOrPinned<CR>", "Close all but"}, k = {":BufferPrevious<CR>", "Goto prev"}, j = {":BufferNext<CR>", "Goto next"}, ["1"] = {":BufferGoto 1<CR>", "Goto 1st"}, ["2"] = {":BufferGoto 2<CR>", "Goto 2nd"}, ["3"] = {":BufferGoto 3<CR>", "Goto 3rd"}, p = {":BufferPin<CR>", "Pin"}}, p = {":BufferPick<CR>", "Pick buffer"}}, {prefix = leader})
-end
-local function map_org(leader)
-  return register({o = {name = "+Org"}}, {prefix = leader})
 end
 local function map_repl()
   return register({["<C-s>"] = {":TREPLSendSelection<CR>", "Send selection"}}, {mode = "v"})
@@ -65,10 +65,9 @@ local function map_neogit(leader)
   return register({[leader] = {":Neogit<CR>", "Open Neogit"}}, {prefix = leader})
 end
 local function map_defaults()
-  map_toggle("t")
-  map_find("f")
+  map_toggle(" ")
+  map_find("t")
   map_repl()
-  map_org(" ")
   map_zenmode(" ")
   map_jump("]")
   map_jump("[")

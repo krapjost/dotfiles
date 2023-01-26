@@ -17,7 +17,12 @@
 (map :<C-c> ":Tclear<CR>" "Clear Term")
 (map :<C-s> ":TREPLSendLine<CR>" "Line REPL")
 (map :<C-f> ":TREPLSendFile<CR>" "File REPL")
-(map ":<CR>" ":noh<CR>" "No highlight")
+
+(fn print-num [n]
+  (vim.cmd (.. "echo " n)))
+
+(map :<F1> print-num "Hello")
+
 
 (fn map-jump [leader]
   (let [gs (require :gitsigns)
@@ -46,7 +51,7 @@
 (fn map-toggle [leader]
   (register {:t [toggle-on-winwidth :Terminal]
              :d [":TroubleToggle<CR>" :Trouble]
-             :n [":NvimTreeToggle<CR>" :Nerdtree]} {:prefix leader}))
+             :o [":NvimTreeToggle<CR>" :Nerdtree]} {:prefix leader}))
 
 (fn map-find [leader]
   (local project-cmd
@@ -75,8 +80,6 @@
              :p [":BufferPick<CR>" "Pick buffer"]}
             {:prefix leader}))
 
-(fn map-org [leader]
-  (register {:o {:name :+Org}} {:prefix leader}))
 
 (fn map-repl []
   (register {:<C-s> [":TREPLSendSelection<CR>" "Send selection"]} {:mode :v}))
@@ -88,10 +91,9 @@
   (register {leader [":Neogit<CR>" "Open Neogit"]} {:prefix leader}))
 
 (fn map-defaults []
- (map-toggle :t)
- (map-find :f)
+ (map-toggle " ")
+ (map-find "t")
  (map-repl)
- (map-org " ")
  (map-zenmode " ")
  (map-jump "]")
  (map-jump "[")

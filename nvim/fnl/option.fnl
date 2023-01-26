@@ -1,4 +1,5 @@
 (local opt vim.opt)
+
 (set opt.laststatus 3)
 (set opt.autoread true)
 (set opt.termguicolors true)
@@ -12,7 +13,6 @@
 (set opt.shiftwidth 2)
 (set opt.tabstop 2)
 (set opt.timeoutlen 100)
-;; (set opt.cmdheight 0)
 (set opt.smartindent true)
 (set opt.expandtab true)
 (set opt.wrap false)
@@ -25,3 +25,5 @@
 (set vim.g.neoterm_default_mod :botright)
 (set vim.g.neoterm_autoscroll 1)
 (set vim.g.neoterm_size 13)
+
+(vim.cmd.colorscheme "poimandres")

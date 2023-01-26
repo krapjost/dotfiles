@@ -81,8 +81,17 @@
       (null-device . "/dev/null"))))
  '(custom-safe-themes
    '("a44e2d1636a0114c5e407a748841f6723ed442dc3a0ed086542dc71b92a87aee" "683b3fe1689da78a4e64d3ddfce90f2c19eb2d8ab1bab1738a63d8263119c3f4" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
- '(global-wakatime-mode t)
+ '(global-wakatime-mode t t)
  '(package-selected-packages '(flycheck-clj-kondo))
+ '(safe-local-variable-values
+   '((cider-clojure-cli-global-options . "-A:dev")
+     (eval progn
+      (local-set-key
+       (kbd "C-c C-r")
+       (lambda nil
+         (interactive)
+         (cider-interactive-eval "(require 'development) (in-ns 'development) (restart)" nil nil
+                                 (cider--nrepl-pr-request-map)))))))
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25)
  '(wakatime-api-key "38932694-e576-4654-8b1a-7b6738f35088")

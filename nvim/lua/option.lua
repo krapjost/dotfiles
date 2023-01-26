@@ -1,4 +1,4 @@
--- :fennel:1664562448
+-- :fennel:1674714291
 local opt = vim.opt
 opt.laststatus = 3
 opt.autoread = true
@@ -25,4 +25,4 @@ opt.autoread = true
 vim.g.neoterm_default_mod = "botright"
 vim.g.neoterm_autoscroll = 1
 vim.g.neoterm_size = 13
-return nil
+return vim.cmd.colorscheme("poimandres")
