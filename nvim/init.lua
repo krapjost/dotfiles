@@ -1,31 +1,17 @@
-local nvim_dir = vim.fn.stdpath [[config]]
-local data_dir = vim.fn.stdpath [[data]]
-local start_dir = "/site/pack/paqs/start/"
-
-local function bootstrap(url)
-  local name = url:gsub(".*/", "")
-  local path = data_dir .. start_dir .. name
-
-  if vim.fn.isdirectory(path) == 0 then
-    print(name .. ": installing in data dir...")
-
-    vim.fn.system { "git", "clone", "--depth", "1", url, path }
-
-    vim.cmd [[redraw]]
-    print(name .. ": finished installing")
-  end
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-bootstrap "https://github.com/savq/paq-nvim.git"
-bootstrap "https://github.com/udayvir-singh/tangerine.nvim"
-
-require "tangerine".setup {
-  -- fnl output
-  vimrc = nvim_dir .. "/vimrc.fnl",
-  source = nvim_dir .. "/fnl",
-  target = nvim_dir .. "/lua",
-  -- compile before loading init.fnl
-  compiler = {
-    hooks = { "onsave", "oninit" }
-  }
-}
+require("lazy").setup(require("plugins"))
+require("option")
+require("keymap")
+require("autocmd")

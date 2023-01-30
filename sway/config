@@ -20,7 +20,7 @@ set $btm "sh /home/krap/dotfiles/sway/float.sh alacritty -e btm"
 set $recorder "sh /home/krap/dotfiles/sway/float.sh alacritty -e wf-recorder -f ~/Videos/$(date "+%y%m%d_%T").mp4"
 set $record_gif "sh /home/krap/dotfiles/sway/float.sh alacritty -e wf-recorder -g "$(slurp)" -F fps=30 -c gif -f ~/Videos/$(date +%y%m%d_%T).gif"
 set $showkey "wshowkeys -b '#e0d6cb' -f '#1f1c17' -s '#657662' -a top -F 'FiraCode Nerd Font Mono 24' -m 5"
-set $term wezterm
+set $term alacritty
 set $browser chromium
 set $emacs "emacsclient -c"
 set $wallpaper "/home/krap/Pictures/wallpaper/002.jpg"
@@ -136,8 +136,8 @@ for_window [app_id=".*"] border pixel 1
     bindsym $mod+Shift+p exec grimshot save area
     bindsym $mod+Alt+p   exec grimshot save output
     bindsym $mod+Ctrl+p  exec grimshot save window
-    # bindsym $mod+g       exec $recorder
-    bindsym $mod+g       exec $record_gif
+    bindsym $mod+g       exec $recorder
+    # bindsym $mod+g       exec $record_gif
 
 #
 # Moving around:

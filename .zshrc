@@ -25,6 +25,7 @@ export CHROME_EXECUTABLE=/usr/bin/chromium
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GO111MODULE='on'
 export GITHUB_PAGE_DIR=~/jost/log/krapjost.github.io
+export WEBKIT_DISABLE_COMPOSITING_MODE=1
 
 # jabba
 [ -s "/home/krap/.jabba/jabba.sh" ] && source "/home/krap/.jabba/jabba.sh"
@@ -50,7 +51,6 @@ function pet-select() {
 }
 zle -N pet-select
 stty -ixon
-bindkey '^s' pet-select
 
 eval "$(ipfs commands completion bash)"
 eval "$(fasd --init auto)"
@@ -74,46 +74,15 @@ alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 alias v='f -t -e nvim'
 alias luamake=/home/krap/jost/lsp/lua-language-server/3rd/luamake/luamake
-
-# TIL 1 xargs = shell argument. fzf | xargs -i {} echo {}
-# TIL 2 ${} = shell parameter expansion, 
-#   s=01234567890abcdefgh
-#   ${s:7}
-#   7890abcdefgh
-#   ${s:7:0}
-#   
-#   ${s:7:2}
-#   78
-#   ${!prefix*}
-#   ${!prefix@}
-#   Expands to the names of variables whose names begin with prefix,
-#   separated by the first character of IFS special variables.
-#   ${!name[@]}
-#   ${!name[*]}
-#   if name is an array, expands to the list of array indices assigned in name.
-#   if not, expands to 0 if name is set and null otherwise.
-#   ${#parameter}
-#   the length in characters of the expanded value of parameter is substituted.
-#   ${parameter#word}
-#   ${parameter##word}
-#   ${parameter%word}
-#   ${parameter%%word}
-#   ${parameter/pattern/string}
-#   ${parameter^pattern}
-#   ${parameter^^pattern}
-#   ${parameter,pattern}
-#   ${parameter,,pattern}
-
+alias ptest="sh /home/krap/work/personal/c/42/PTEST/test.sh"
+alias neovide="WINIT_UNIX_BACKEND=x11 neovide"
+alias hyle="cd ~/project/hyle && neovide ./src/index.tsx"
 
 vif () {
     cd ~
     local fullpath=$(fzf)
-    # 왼쪽부터 마지막 일치하는 /까지 지운다.
     local filename="${fullpath##*/}"
-    # 오른쪽부터 처음 일치하는 /까지 지운다.
     local dirpath="${fullpath%/*}"
-    # echo $dirpath
-    # echo $filename
     cd $dirpath && vi $filename
 }
 
@@ -131,4 +100,6 @@ fasd-fzf-cd-vi() {
 } 
 zle -N fasd-fzf-cd-vi
 bindkey '^e' fasd-fzf-cd-vi
-alias ptest="sh /home/krap/work/personal/c/42/PTEST/test.sh"
+bindkey '^s' pet-select
+bindkey -s "^ " 'lazygit^M'
+
