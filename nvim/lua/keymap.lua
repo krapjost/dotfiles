@@ -52,11 +52,11 @@ local function map_tab()
 end
 map_tab()
 
+
 local function map_space(leader)
   return register({
     ['\\'] = { ':SidebarNvimToggle<CR>', 'Sidebar' },
     [','] = { ':Telescope harpoon marks theme=get_ivy<CR>', 'Harpoon' },
-    d = { ':TroubleToggle<CR>', 'Trouble' },
     f = {
       ':Telescope frecency workspace=CWD theme=get_dropdown<CR>',
       'Frecency',
@@ -94,11 +94,20 @@ local function map_repl()
   )
 end
 
+local neogit = require('neogit')
+local function open_neogit_commit()
+  neogit.open({ 'commit' })
+end
+
+local function open_neogit()
+  neogit.open({ kind = 'split' })
+end
+
 local function map_neogit(leader)
-  return register(
-    { [leader] = { ':Neogit<CR>', 'Open Neogit' } },
-    { prefix = leader }
-  )
+  return register({
+    [leader] = { open_neogit, 'Open Neogit' },
+    c = { open_neogit_commit, 'Open Commit' },
+  }, { prefix = leader })
 end
 
 local function map_defaults()

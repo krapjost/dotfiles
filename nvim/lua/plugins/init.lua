@@ -38,11 +38,6 @@ return {
 
     -- lsp --
     {
-      -- breadcrumbs on top of window
-      'SmiteshP/nvim-navic',
-      dependencies = 'neovim/nvim-lspconfig',
-    },
-    {
       'neovim/nvim-lspconfig',
     },
     {
@@ -55,10 +50,13 @@ return {
       dependencies = { 'neovim/nvim-lspconfig', 'SmiteshP/nvim-navic' },
     },
     {
+      'SmiteshP/nvim-navic',
+      dependencies = 'neovim/nvim-lspconfig',
+    },
+    {
       'jose-elias-alvarez/null-ls.nvim',
       config = require('plugins.config.null-ls'),
     },
-    { 'kkharji/sqlite.lua' },
     {
       'nvim-telescope/telescope.nvim',
       config = require('plugins.config.telescope'),
@@ -69,6 +67,7 @@ return {
         'nvim-telescope/telescope.nvim',
       },
     },
+    { 'kkharji/sqlite.lua' },
     {
       'nvim-telescope/telescope-frecency.nvim',
       dependencies = {
@@ -76,11 +75,11 @@ return {
         'kkharji/sqlite.lua',
       },
     },
-    { 'folke/zen-mode.nvim' },
-    { 'folke/twilight.nvim' },
+    { 'folke/zen-mode.nvim', lazy = true },
     {
       'folke/which-key.nvim',
       config = require('plugins.config.whichkey'),
+      lazy = true,
     },
     { 'folke/trouble.nvim' },
     {
@@ -88,8 +87,7 @@ return {
       config = function()
         require('todo-comments').setup()
       end,
-    }, -- todo manager
-    { 'nvim-tree/nvim-tree.lua' },
+    },
     { 'tpope/vim-repeat' },
     { 'tpope/vim-surround' },
     {
@@ -98,7 +96,7 @@ return {
         require('Comment').setup()
       end,
     },
-    { 'ggandor/leap.nvim' },
+    { 'ggandor/leap.nvim', config = require('plugins.config.leap') },
     {
       'windwp/nvim-autopairs',
       config = function()
@@ -114,9 +112,28 @@ return {
       dependencies = 'nvim-treesitter/nvim-treesitter',
     },
     { 'p00f/nvim-ts-rainbow' },
-    { 'lewis6991/gitsigns.nvim' },
-    { 'timuntersberger/neogit' },
-    { 'L3MON4D3/LuaSnip' },
+    {
+      'lewis6991/gitsigns.nvim',
+      config = require('plugins.config.gitsigns'),
+    },
+    {
+      'sindrets/diffview.nvim',
+    },
+    {
+      'timuntersberger/neogit',
+      config = require('plugins.config.neogit'),
+      dependencies = {
+
+        'nvim-lua/plenary.nvim',
+        'sindrets/diffview.nvim',
+      },
+    },
+    {
+      'L3MON4D3/LuaSnip',
+      version = '<CurrentMajor>.*',
+      build = 'make install_jsregexp',
+      config = require('plugins.config.luasnip'),
+    },
     { 'saadparwaiz1/cmp_luasnip' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-nvim-lua' },
