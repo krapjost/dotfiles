@@ -42,5 +42,6 @@ return function()
       },
     },
   })
-  require('telescope').load_extension('harpoon')
+  telescope.load_extension('harpoon')
+  telescope.load_extension('frecency')
 end

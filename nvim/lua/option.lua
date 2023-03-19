@@ -6,13 +6,13 @@ opt.pumheight = 8
 opt.laststatus = 3
 opt.autoread = true
 opt.termguicolors = true
-
 opt.background = 'dark'
 opt.ignorecase = true
 opt.cursorline = true
 opt.smartcase = true
 opt.number = true
 opt.numberwidth = 2
+opt.laststatus = 0
 opt.relativenumber = true
 opt.shiftwidth = 2
 opt.tabstop = 2

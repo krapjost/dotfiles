@@ -4,11 +4,18 @@ return function()
       'lua',
       'rust',
       'typescript',
-      'markdown',
-      'dart',
     },
     autotag = { enable = true },
     textobjects = {
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<M-j>'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<M-k>'] = '@parameter.inner',
+        },
+      },
       move = {
         enable = true,
         set_jumps = true,
@@ -46,9 +53,9 @@ return function()
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = 'vs',
-        node_incremental = 's',
-        node_decremental = 'u',
+        init_selection = 'vz',
+        node_incremental = 'z',
+        node_decremental = 'Z',
       },
     },
     highlight = {

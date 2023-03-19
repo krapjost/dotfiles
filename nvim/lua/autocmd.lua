@@ -1,5 +1,16 @@
--- :fennel:1676014788
 local au = vim.api.nvim_create_autocmd
+
+au('BufWritePost', {
+  pattern = '**/dotfiles/nvim/*.lua',
+  callback = function()
+    local filepath = vim.fn.expand('%')
+
+    dofile(filepath)
+    vim.notify('Configuration reloaded \n' .. filepath, nil)
+  end,
+  desc = 'Reload config on save',
+})
+
 local function au_callback(langs)
   local function _1_()
     for _, v in ipairs(langs) do
@@ -27,14 +38,11 @@ local function au_pattern(langs)
 end
 local function set_lang_au(langs, _3fcallback)
   _G.assert((nil ~= langs), 'Missing argument langs on autocmd.fnl:13')
-  return au(
-    { 'BufRead', 'BufNewFile' },
-    {
-      pattern = au_pattern(langs),
-      callback = (_3fcallback or au_callback(langs)),
-      once = true,
-    }
-  )
+  return au({ 'BufRead', 'BufNewFile' }, {
+    pattern = au_pattern(langs),
+    callback = (_3fcallback or au_callback(langs)),
+    once = true,
+  })
 end
 local function _3_()
   vim.opt.omnifunc = 'rescript#Complete'
@@ -45,26 +53,22 @@ local function _4_()
   return vim.cmd('setfiletype clojure')
 end
 set_lang_au({ 'cljd' }, _4_)
+
 local function au_when_lsp(capa, bufnr)
-  au(
-    'BufWritePost',
-    {
-      pattern = { '*.js', '*.ts', '*.jsx', '*.tsx' },
-      desc = 'fix-linting-problems',
-      command = 'EslintFixAll',
-    }
-  )
+  au('BufWritePost', {
+    pattern = { '*.js', '*.ts', '*.jsx', '*.tsx' },
+    desc = 'fix-linting-problems',
+    command = 'EslintFixAll',
+  })
   if capa.documentFormattingProvider then
-    return au(
-      'BufWritePre',
-      {
-        buffer = bufnr,
-        desc = 'format-on-save',
-        command = 'lua vim.lsp.buf.format()',
-      }
-    )
+    return au('BufWritePre', {
+      buffer = bufnr,
+      desc = 'format-on-save',
+      command = 'lua vim.lsp.buf.format()',
+    })
   else
     return nil
   end
 end
+
 return { ['au-when-lsp'] = au_when_lsp }

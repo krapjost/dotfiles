@@ -36,11 +36,31 @@ local function map_jump(leader)
   end
 end
 
+local function map_tab()
+  register({
+    ['<CR>'] = { ':lua require("harpoon.mark").add_file()<CR>', 'Add Mark' },
+    ['<tab>'] = {
+      ':Telescope harpoon marks theme=get_dropdown<CR>',
+      'All Marks',
+    },
+    ['n'] = { ':lua require("harpoon.ui").nav_next()<CR>', 'Next Mark' },
+    ['p'] = { ':lua require("harpoon.ui").nav_prev()<CR>', 'Prev Mark' },
+    ['1'] = { ':lua require("harpoon.ui").nav_file(1)<CR>', 'File 1' },
+    ['2'] = { ':lua require("harpoon.ui").nav_file(2)<CR>', 'File 2' },
+    ['3'] = { ':lua require("harpoon.ui").nav_file(3)<CR>', 'File 3' },
+  }, { prefix = '<tab>' })
+end
+map_tab()
+
 local function map_space(leader)
   return register({
-    ['\\'] = { ':ZenMode<CR>', 'Zenmode' },
+    ['\\'] = { ':SidebarNvimToggle<CR>', 'Sidebar' },
+    [','] = { ':Telescope harpoon marks theme=get_ivy<CR>', 'Harpoon' },
     d = { ':TroubleToggle<CR>', 'Trouble' },
-    o = { ':DrexDrawerToggle<CR>', 'drex' },
+    f = {
+      ':Telescope frecency workspace=CWD theme=get_dropdown<CR>',
+      'Frecency',
+    },
     ['`'] = { ':b#<CR>', 'Prev buffer' },
     t = { ':TodoTelescope<CR>', 'Todos' },
     [' '] = { ':Telescope find_files<CR>', 'Files' },
@@ -66,15 +86,14 @@ local function map_spectre()
     },
   })
 end
+
 local function map_repl()
   return register(
     { ['<C-s>'] = { ':TREPLSendSelection<CR>', 'Send selection' } },
     { mode = 'v' }
   )
 end
-local function map_zenmode(leader)
-  return register({}, { prefix = leader })
-end
+
 local function map_neogit(leader)
   return register(
     { [leader] = { ':Neogit<CR>', 'Open Neogit' } },
@@ -123,6 +142,7 @@ local function map_for_git(leader, bufnr)
     },
   }, { prefix = leader, buffer = bufnr })
 end
+
 local function map_when_lsp(capa, leader, bufnr)
   local mappings = { [leader] = {} }
   local opts = { buffer = bufnr }

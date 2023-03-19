@@ -54,11 +54,24 @@ return {
       'jose-elias-alvarez/null-ls.nvim',
       config = require('plugins.config.null-ls'),
     },
+    { 'kkharji/sqlite.lua' },
     {
       'nvim-telescope/telescope.nvim',
       config = require('plugins.config.telescope'),
     },
-    { 'nvim-telescope/telescope-symbols.nvim' },
+    {
+      'nvim-telescope/telescope-symbols.nvim',
+      dependencies = {
+        'nvim-telescope/telescope.nvim',
+      },
+    },
+    {
+      'nvim-telescope/telescope-frecency.nvim',
+      dependencies = {
+        'nvim-telescope/telescope.nvim',
+        'kkharji/sqlite.lua',
+      },
+    },
     { 'folke/zen-mode.nvim' },
     { 'folke/twilight.nvim' },
     {
@@ -94,7 +107,10 @@ return {
       'nvim-treesitter/nvim-treesitter',
       config = require('plugins.config.treesitter'),
     },
-    { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      dependencies = 'nvim-treesitter/nvim-treesitter',
+    },
     { 'p00f/nvim-ts-rainbow' },
     { 'lewis6991/gitsigns.nvim' },
     { 'timuntersberger/neogit' },
