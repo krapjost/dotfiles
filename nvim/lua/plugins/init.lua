@@ -17,6 +17,10 @@ return {
       config = require('plugins.config.harpoon'),
     },
     {
+      'levouh/tint.nvim',
+      config = require('plugins.config.tint'),
+    },
+    {
       'theblob42/drex.nvim',
       dependencies = 'kyazdani42/nvim-web-devicons',
     },
@@ -76,9 +80,7 @@ return {
     { 'folke/twilight.nvim' },
     {
       'folke/which-key.nvim',
-      config = function()
-        require('which-key').setup()
-      end,
+      config = require('plugins.config.whichkey'),
     },
     { 'folke/trouble.nvim' },
     {

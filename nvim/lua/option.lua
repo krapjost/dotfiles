@@ -2,6 +2,10 @@ local opt = vim.opt
 local g = vim.g
 
 vim.go.fillchars = 'eob: '
+vim.cmd([[
+  let &winheight = &lines * 7 / 10
+  let &winwidth = &columns * 8 / 10
+]])
 opt.pumheight = 8
 opt.laststatus = 3
 opt.autoread = true
