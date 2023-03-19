@@ -24,8 +24,6 @@ return {
       'theblob42/drex.nvim',
       dependencies = 'kyazdani42/nvim-web-devicons',
     },
-    { 'phaazon/mind.nvim' }, -- task manager
-    -- ui
     {
       'sidebar-nvim/sidebar.nvim',
       config = require('plugins.config.sidebar'),
@@ -73,6 +71,13 @@ return {
       dependencies = {
         'nvim-telescope/telescope.nvim',
         'kkharji/sqlite.lua',
+      },
+    },
+    {
+      'cljoly/telescope-repo.nvim',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope.nvim',
       },
     },
     { 'folke/zen-mode.nvim', lazy = true },

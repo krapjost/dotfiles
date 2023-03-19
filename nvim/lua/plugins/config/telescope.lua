@@ -3,7 +3,36 @@ return function()
   telescope.setup({
     defaults = {
       ['dynamic_preview_title:'] = true,
-      file_ignore_patterns = { 'node_modules', 'target', 'dist', 'www' },
+      file_ignore_patterns = {
+        '^./.git/',
+        '^node_modules/',
+        '^vendor/',
+        'data',
+        'bin',
+        'build',
+        'target',
+        'dist',
+        'www',
+        '%.jpeg',
+        '%.png',
+        '%.psd',
+        '%.mp4',
+        '%.webp',
+        '%.gif',
+        '%.pdf',
+        '%.ttf',
+        '%.lock',
+      },
+      vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
+        '--smart-case',
+        '--trim',
+      },
       winblend = 10,
       layout_strategy = 'flex',
       layout_config = {
@@ -28,20 +57,33 @@ return function()
       find_files = {
         theme = 'dropdown',
         find_command = {
-          'rg',
-          '--files',
-          '--hidden',
-          '--no-ignore',
-          '-g',
-          '!**/.git/*',
-          '-g',
-          '!**/node_modules/*',
-          '-g',
-          '!*.png',
+          'fd',
+          '--type',
+          'f',
+          '--strip-cwd-prefix',
         },
       },
     },
+ extensions = {
+    repo = {
+      list = {
+        fd_opts = {
+          "--type",
+          'd',
+          "--exclude",
+          "node_modules",
+          '--max-depth',
+          '2',
+        },
+        search_dirs = {
+          "~/project",
+          "~/dotfiles"
+        },
+      },
+    },
+  },
   })
   telescope.load_extension('harpoon')
   telescope.load_extension('frecency')
+  telescope.load_extension('repo')
 end

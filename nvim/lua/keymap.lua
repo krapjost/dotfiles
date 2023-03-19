@@ -52,7 +52,6 @@ local function map_tab()
 end
 map_tab()
 
-
 local function map_space(leader)
   return register({
     ['\\'] = { ':SidebarNvimToggle<CR>', 'Sidebar' },
@@ -65,6 +64,7 @@ local function map_space(leader)
     t = { ':TodoTelescope<CR>', 'Todos' },
     [' '] = { ':Telescope find_files<CR>', 'Files' },
     l = { ':Telescope live_grep<CR>', 'Live grep' },
+    r = { ':Telescope repo list<CR>', 'Repo' },
     b = { ':Telescope buffers<CR>', 'Buffers' },
     ['"'] = { ':Telescope registers<CR>', 'Registers' },
     ['\''] = { ':Telescope marks theme=get_ivy<CR>', 'Marks' },
