@@ -29,7 +29,7 @@ return function()
   }
 
   local opts = {
-    sections = { 'todos', 'files', harpoon_marks, 'diagnostics', 'git' },
+    sections = { 'todos', 'files', harpoon_marks, 'git' },
     hide_statusline = true,
     section_separator = { '' },
     section_title_separator = {},

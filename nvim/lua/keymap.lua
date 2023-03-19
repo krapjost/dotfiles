@@ -54,7 +54,7 @@ map_tab()
 
 local function map_space(leader)
   return register({
-    ['\\'] = { ':SidebarNvimToggle<CR>', 'Sidebar' },
+    o = { ':SidebarNvimToggle<CR>', 'Sidebar' },
     [','] = { ':Telescope harpoon marks theme=get_ivy<CR>', 'Harpoon' },
     f = {
       ':Telescope frecency workspace=CWD theme=get_dropdown<CR>',
