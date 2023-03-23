@@ -1,15 +1,13 @@
 return {
   {
+    { 'nvim-lua/plenary.nvim', priority = 1000 },
+    { 'kyazdani42/nvim-web-devicons', priority = 900 },
     {
       'olivercederborg/poimandres.nvim',
-      lazy = false,
-      priority = 1000,
       config = function()
         vim.cmd([[colorscheme poimandres]])
       end,
     },
-    { 'kyazdani42/nvim-web-devicons' },
-    { 'nvim-lua/plenary.nvim' },
     { 'windwp/nvim-spectre' },
     {
       'ThePrimeagen/harpoon',
@@ -21,17 +19,78 @@ return {
       config = require('plugins.config.tint'),
     },
     {
-      'theblob42/drex.nvim',
-      dependencies = 'kyazdani42/nvim-web-devicons',
-    },
-    {
       'sidebar-nvim/sidebar.nvim',
       config = require('plugins.config.sidebar'),
     },
     {
-      -- animated progress indicator
       'j-hui/fidget.nvim',
       config = require('plugins.config.fidget'),
+    },
+    { 'folke/zen-mode.nvim', cmd = 'ZenMode' },
+    {
+      'folke/neodev.nvim',
+      config = function()
+        require('neodev').setup()
+      end,
+    },
+    {
+      'nyngwang/NeoTerm.lua',
+      config = function()
+        require('neo-term').setup({
+          -- exclude_buftypes = { 'terminal' },
+        })
+      end,
+    },
+    {
+      'folke/which-key.nvim',
+      config = require('plugins.config.whichkey'),
+      lazy = true,
+    },
+    { 'folke/trouble.nvim' },
+    {
+      'folke/todo-comments.nvim',
+      config = function()
+        require('todo-comments').setup()
+      end,
+    },
+    { 'tpope/vim-repeat' },
+    { 'tpope/vim-surround' },
+    {
+      'numToStr/Comment.nvim',
+      config = function()
+        require('Comment').setup()
+      end,
+    },
+    { 'ggandor/leap.nvim', config = require('plugins.config.leap') },
+    {
+      'windwp/nvim-autopairs',
+      config = function()
+        require('nvim-autopairs').setup()
+      end,
+    },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      config = require('plugins.config.treesitter'),
+    },
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      dependencies = 'nvim-treesitter/nvim-treesitter',
+    },
+    { 'p00f/nvim-ts-rainbow' },
+    {
+      'lewis6991/gitsigns.nvim',
+      config = require('plugins.config.gitsigns'),
+    },
+    {
+      'sindrets/diffview.nvim',
+    },
+    {
+      'timuntersberger/neogit',
+      config = require('plugins.config.neogit'),
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        'sindrets/diffview.nvim',
+      },
     },
 
     -- lsp --
@@ -80,62 +139,15 @@ return {
         'nvim-telescope/telescope.nvim',
       },
     },
-    { 'folke/zen-mode.nvim', lazy = true },
     {
-      'folke/which-key.nvim',
-      config = require('plugins.config.whichkey'),
-      lazy = true,
-    },
-    { 'folke/trouble.nvim' },
-    {
-      'folke/todo-comments.nvim',
-      config = function()
-        require('todo-comments').setup()
-      end,
-    },
-    { 'tpope/vim-repeat' },
-    { 'tpope/vim-surround' },
-    {
-      'numToStr/Comment.nvim',
-      config = function()
-        require('Comment').setup()
-      end,
-    },
-    { 'ggandor/leap.nvim', config = require('plugins.config.leap') },
-    {
-      'windwp/nvim-autopairs',
-      config = function()
-        require('nvim-autopairs').setup()
-      end,
-    },
-    {
-      'nvim-treesitter/nvim-treesitter',
-      config = require('plugins.config.treesitter'),
-    },
-    {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      dependencies = 'nvim-treesitter/nvim-treesitter',
-    },
-    { 'p00f/nvim-ts-rainbow' },
-    {
-      'lewis6991/gitsigns.nvim',
-      config = require('plugins.config.gitsigns'),
-    },
-    {
-      'sindrets/diffview.nvim',
-    },
-    {
-      'timuntersberger/neogit',
-      config = require('plugins.config.neogit'),
+      'krapjost/telescope-gpt.nvim',
       dependencies = {
-
-        'nvim-lua/plenary.nvim',
-        'sindrets/diffview.nvim',
+        'nvim-telescope/telescope.nvim',
       },
     },
     {
       'L3MON4D3/LuaSnip',
-      version = '<CurrentMajor>.*',
+      version = '1.2.1',
       build = 'make install_jsregexp',
       config = require('plugins.config.luasnip'),
     },
@@ -148,6 +160,19 @@ return {
     {
       'hrsh7th/nvim-cmp',
       config = require('plugins.config.cmp'),
+    },
+
+    -- AI
+    {
+      'zbirenbaum/copilot.lua',
+      config = require('plugins.config.copilot'),
+    },
+    {
+      'zbirenbaum/copilot-cmp',
+      dependencies = { 'copilot.lua' },
+      config = function()
+        require('copilot_cmp').setup()
+      end,
     },
   },
 }

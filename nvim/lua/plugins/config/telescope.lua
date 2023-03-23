@@ -64,26 +64,27 @@ return function()
         },
       },
     },
- extensions = {
-    repo = {
-      list = {
-        fd_opts = {
-          "--type",
-          'd',
-          "--exclude",
-          "node_modules",
-          '--max-depth',
-          '2',
-        },
-        search_dirs = {
-          "~/project",
-          "~/dotfiles"
+    extensions = {
+      repo = {
+        list = {
+          fd_opts = {
+            '--type',
+            'd',
+            '--exclude',
+            'node_modules',
+            '--max-depth',
+            '2',
+          },
+          search_dirs = {
+            '~/project',
+            '~/dotfiles',
+          },
         },
       },
     },
-  },
   })
   telescope.load_extension('harpoon')
   telescope.load_extension('frecency')
   telescope.load_extension('repo')
+  telescope.load_extension('gpt')
 end

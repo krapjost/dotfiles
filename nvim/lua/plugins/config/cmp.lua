@@ -1,14 +1,15 @@
 local function make_sorting(cmp)
   local compare = cmp.config.compare
   return {
-    priority_weight = 1.0,
+    priority_weight = 2.0,
     comparators = {
+      require('copilot_cmp.comparators').prioritize,
+      compare.offset,
       compare.exact,
       compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
       compare.recently_used,
-      compare.offset,
-      compare.kind,
       compare.locality,
+      compare.kind,
       compare.sort_text,
       compare.order,
     },
@@ -29,6 +30,9 @@ return function()
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
+    },
+    experimental = {
+      ghost_text = true,
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -58,6 +62,7 @@ return function()
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
+      { name = 'copilot', priority = 7 },
       { name = 'nvim_lsp', priority = 6 },
       { name = 'nvim_lua', priority = 5 },
       { name = 'luasnip', priority = 4 },

@@ -103,3 +103,6 @@ bindkey '^e' fasd-fzf-cd-vi
 bindkey '^s' pet-select
 bindkey -s "^ " 'lazygit^M'
 
+
+[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+

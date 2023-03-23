@@ -40,6 +40,9 @@ return function()
             telemetry = {
               enable = false,
             },
+            completion = {
+              callSnippet = 'Replace',
+            },
           },
         }
       end
